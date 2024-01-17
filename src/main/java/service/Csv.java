@@ -13,6 +13,7 @@ import java.util.Locale;
 public class Csv {
     private final String inputFile;
     private final String outputFile;
+    private ArrayList<ArrayList<String>> queryArray = new ArrayList<>();
 
     public Csv(String input, String output){
         this.inputFile = input;
@@ -25,6 +26,9 @@ public class Csv {
         try (CSVReader reader = new CSVReader(new FileReader(this.inputFile));
              CSVWriter writer = new CSVWriter(new FileWriter(this.outputFile))) {
 
+
+            ArrayList<String> partQueryArray = new ArrayList<>();
+
             List<String[]> filteredLines = new ArrayList<>();
             String[] li = new String[1000];
             StringBuilder scoutput = new StringBuilder();
@@ -32,11 +36,12 @@ public class Csv {
             int i = 1;
             while ((nextLine = reader.readNext()) != null) {
 
-                if(i%900==0){
-                    scoutput.append("\n\n\n'");
-                    scoutput.append(i);
-                    scoutput.append("'\n\n\n");
+                if(i%10==0){
+                    this.queryArray.add(partQueryArray);
+                    partQueryArray = new ArrayList<>();
                 }
+
+                partQueryArray.add(nextLine[0].toLowerCase(Locale.ROOT));
 
                 scoutput.append("'");
                 scoutput.append(nextLine[0].toLowerCase(Locale.ROOT));
@@ -55,8 +60,10 @@ public class Csv {
                 i++;
             }
 
-            System.out.println(scoutput);
+
+            this.queryArray.add(partQueryArray);
             System.out.println(i);
+            System.out.println(this.queryArray);
             writ.write(scoutput.toString());
             writer.writeAll(filteredLines);
             writer.flush();
@@ -67,4 +74,20 @@ public class Csv {
         }
     }
 
+
+    public String getInputFile() {
+        return inputFile;
+    }
+
+    public String getOutputFile() {
+        return outputFile;
+    }
+
+    public ArrayList<ArrayList<String>> getQueryArray() {
+        return queryArray;
+    }
+
+    public void setQueryArray(ArrayList<ArrayList<String>> queryArray) {
+        this.queryArray = queryArray;
+    }
 }

@@ -4,19 +4,32 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.text.Font?>
-<GridPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="controller.Controller"
-          alignment="center"
-          hgap="10"
-          vgap="10">
+          fx:controller="controller.Controller">
 
-    <Label text="Query Builder" textFill="green">
-        <font>
-            <Font name="Times New Roman bold" size="70">
 
-            </Font>
-        </font>
-    </Label>
 
-</GridPane>
+    <top>
+
+        <GridPane>
+            <HBox spacing="20" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-padding: 20">
+                <TextField fx:id="filePath" editable="false" promptText="Choose a file" prefWidth="300"  />
+                <Button fx:id="openFileButton" text="Open File" onAction="#onOpenFileClicked"/>
+            </HBox>
+        </GridPane>
+
+    </top>
+
+    <center>
+        <TextArea>
+
+        </TextArea>
+
+    </center>
+
+    <bottom>
+        <Button text="ok"/>
+
+    </bottom>
+</BorderPane>

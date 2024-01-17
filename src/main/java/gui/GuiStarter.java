@@ -28,18 +28,6 @@ public class GuiStarter extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/gui/MainScene.fxml")));
 
-/*
-        GridPane root = new GridPane();
-        root.setAlignment(Pos.CENTER);
-        root.setVgap(10);
-        root.setHgap(10);
-
-        Label greetings = new Label("Query Builder!");
-        greetings.setTextFill(Color.GREEN);
-        greetings.setFont(Font.font("Times New Roman", FontWeight.BOLD, 70));
-
-        root.getChildren().add(greetings);
-*/
 
         stage.setTitle("Query Builder");
         stage.setScene(new Scene(root, 700, 700));
