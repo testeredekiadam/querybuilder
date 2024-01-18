@@ -12,24 +12,20 @@ import java.util.Locale;
 
 public class Csv {
     private final String inputFile;
-    private final String outputFile;
+
     private ArrayList<ArrayList<String>> queryArray = new ArrayList<>();
 
-    public Csv(String input, String output){
+    public Csv(String input){
         this.inputFile = input;
-        this.outputFile = output;
     }
 
     public void CsvToString () throws IOException {
-        BufferedWriter writ = new BufferedWriter(new FileWriter("scout"));
 
-        try (CSVReader reader = new CSVReader(new FileReader(this.inputFile));
-             CSVWriter writer = new CSVWriter(new FileWriter(this.outputFile))) {
+        try (CSVReader reader = new CSVReader(new FileReader(this.inputFile))) {
 
 
             ArrayList<String> partQueryArray = new ArrayList<>();
 
-            List<String[]> filteredLines = new ArrayList<>();
             String[] li = new String[1000];
             StringBuilder scoutput = new StringBuilder();
             String[] nextLine;
@@ -41,22 +37,14 @@ public class Csv {
                     partQueryArray = new ArrayList<>();
                 }
 
-                partQueryArray.add(nextLine[0].toLowerCase(Locale.ROOT));
 
                 scoutput.append("'");
                 scoutput.append(nextLine[0].toLowerCase(Locale.ROOT));
-                scoutput.append("', ");
+                scoutput.append("' ");
+                partQueryArray.add(scoutput.toString());
+                scoutput = new StringBuilder();
 
 
-                List<String> filteredValues = new ArrayList<>();
-
-                for (String value : nextLine) {
-                    if (!value.trim().isEmpty()) {
-                        filteredValues.add(value);
-                    }
-                }
-
-                filteredLines.add(filteredValues.toArray(new String[0]));
                 i++;
             }
 
@@ -64,10 +52,6 @@ public class Csv {
             this.queryArray.add(partQueryArray);
             System.out.println(i);
             System.out.println(this.queryArray);
-            writ.write(scoutput.toString());
-            writer.writeAll(filteredLines);
-            writer.flush();
-            writ.close();
 
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
@@ -79,9 +63,6 @@ public class Csv {
         return inputFile;
     }
 
-    public String getOutputFile() {
-        return outputFile;
-    }
 
     public ArrayList<ArrayList<String>> getQueryArray() {
         return queryArray;

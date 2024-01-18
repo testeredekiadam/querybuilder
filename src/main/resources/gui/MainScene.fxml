@@ -17,12 +17,16 @@
                 <TextField fx:id="filePath" editable="false" promptText="Choose a file" prefWidth="300"  />
                 <Button fx:id="openFileButton" text="Open File" onAction="#onOpenFileClicked"/>
             </HBox>
+            <HBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-padding: 0 0 10 20">
+                <TextField fx:id="table1" promptText="Enter table"/>
+                <TextField fx:id="attribute1" promptText="Enter attribute"/>
+            </HBox>
         </GridPane>
 
     </top>
 
     <center>
-        <TextArea>
+        <TextArea fx:id="query">
 
         </TextArea>
 
