@@ -20,13 +20,14 @@
             <HBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-padding: 0 0 10 20">
                 <TextField fx:id="table1" promptText="Enter table"/>
                 <TextField fx:id="attribute1" promptText="Enter attribute"/>
+                <Button fx:id="updateFiltersButton" text="Update Filters" onAction="#onUpdateFilters"/>
             </HBox>
         </GridPane>
 
     </top>
 
     <center>
-        <TextArea fx:id="query">
+        <TextArea fx:id="query" editable="false">
 
         </TextArea>
 
