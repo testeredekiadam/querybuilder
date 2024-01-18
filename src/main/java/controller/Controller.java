@@ -1,14 +1,12 @@
 package controller;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.scene.input.KeyEvent;
 
 import service.Csv;
 
@@ -40,9 +38,7 @@ public class Controller {
 
     @FXML
     public void initialize(){
-        Platform.runLater(() -> {
-            this.openFileButton.requestFocus();
-            }
+        Platform.runLater(() -> this.openFileButton.requestFocus()
         );
     }
 
