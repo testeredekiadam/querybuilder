@@ -32,7 +32,7 @@ public class Csv {
             int i = 1;
             while ((nextLine = reader.readNext()) != null) {
 
-                if(i%10==0){
+                if(i%900==0){
                     this.queryArray.add(partQueryArray);
                     partQueryArray = new ArrayList<>();
                 }
