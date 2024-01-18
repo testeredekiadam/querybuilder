@@ -1,32 +1,29 @@
 package service;
 
 import com.opencsv.CSVReader;
-import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.*;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class Csv {
     private final String inputFile;
 
-    private ArrayList<ArrayList<String>> queryArray = new ArrayList<>();
+    private final ArrayList<ArrayList<String>> queryArray = new ArrayList<>();
 
     public Csv(String input){
         this.inputFile = input;
     }
 
-    public void CsvToString () throws IOException {
+    public void CsvToString (){
 
         try (CSVReader reader = new CSVReader(new FileReader(this.inputFile))) {
 
 
             ArrayList<String> partQueryArray = new ArrayList<>();
 
-            String[] li = new String[1000];
             StringBuilder scoutput = new StringBuilder();
             String[] nextLine;
             int i = 1;
@@ -54,13 +51,8 @@ public class Csv {
             System.out.println(this.queryArray);
 
         } catch (IOException | CsvValidationException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
-    }
-
-
-    public String getInputFile() {
-        return inputFile;
     }
 
 
@@ -68,7 +60,4 @@ public class Csv {
         return queryArray;
     }
 
-    public void setQueryArray(ArrayList<ArrayList<String>> queryArray) {
-        this.queryArray = queryArray;
-    }
 }
