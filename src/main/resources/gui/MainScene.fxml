@@ -20,7 +20,10 @@
                 <TextField fx:id="selectedColumns" promptText="Enter columns"/>
                 <TextField fx:id="table1" promptText="Enter table"/>
                 <TextField fx:id="attribute1" promptText="Enter attribute"/>
-                <Button fx:id="updateFiltersButton" text="Update Filters" onAction="#onUpdateFilters"/>
+            </HBox>
+            <HBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-padding: 0 0 10 20">
+                <Button fx:id="displayQueryButton" text="Display Query" onAction="#display"/>
+
             </HBox>
         </GridPane>
 

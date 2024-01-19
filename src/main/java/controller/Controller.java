@@ -13,16 +13,18 @@ import javafx.stage.Stage;
 import service.Csv;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Controller {
 
     @FXML
-    Button updateFiltersButton;
+    Button copyButton;
 
     @FXML
-    Button copyButton;
+    Button openFileButton;
+
+    @FXML
+    Button displayQueryButton;
 
     @FXML
     TextField filePath;
@@ -30,8 +32,6 @@ public class Controller {
     @FXML
     TextArea query;
 
-    @FXML
-    Button openFileButton;
 
     @FXML
     TextField table1;
@@ -62,42 +62,20 @@ public class Controller {
             Csv a = new Csv(selectedFile.getAbsolutePath());
             a.CsvToString();
             this.queryArray = a.getQueryArray();
-            displayQuery(this.table1.getText(), this.attribute1.getText(),this.selectedColumns.getText());
         }
     }
 
     @FXML
     public void displayQuery(String tableName, String attributeName, String columns) {
-        final int[] i = {0};
 
         StringBuilder queryString = new StringBuilder();
-        queryString.append("SELECT ")
-                .append(columns)
-                .append("\n")
-                .append("FROM ")
-                .append(tableName).append("\n")
-                .append("WHERE ")
-                .append(attributeName);
-
-        this.queryArray.forEach(arrayItem -> {
-            if(i[0] > 0){
-                queryString.append("AND ")
-                        .append(attributeName);
-            }
-            queryString.append(" IN ")
-                    .append('(')
-                    .append(arrayItem.toString().trim(), 1, arrayItem.toString().trim().length() -1)
-                    .append(")")
-                    .append("\n");
-
-            i[0]++;
-        });
+        select(queryString,columns);
+        from(queryString, tableName);
+        if(!this.queryArray.isEmpty()) {
+            searchInCsv(queryString, attributeName, this.queryArray);
+        }
 
         this.query.setText(queryString.toString());
-    }
-
-    public void onUpdateFilters() {
-        displayQuery(this.table1.getText(), this.attribute1.getText(),this.selectedColumns.getText());
     }
 
     public void onCopy(){
@@ -110,4 +88,54 @@ public class Controller {
         }
         System.out.println("Copy Clicked");
     }
+
+    public void select(StringBuilder stringBuilder, String columns){
+        stringBuilder.append("SELECT ");
+        if(!columns.isEmpty()) {
+            stringBuilder.append(columns);
+        }
+        else {
+            stringBuilder.append("*");
+        }
+        stringBuilder.append("\n");
+    }
+
+    public void from(StringBuilder stringBuilder, String table){
+        stringBuilder.append("FROM ");
+        if(!table.isEmpty()){
+            stringBuilder.append(table);
+        }
+        else {
+            stringBuilder.append(" 'enter table name' ");
+        }
+        stringBuilder.append("\n");
+    }
+
+
+    public void searchInCsv(StringBuilder stringBuilder, String columnFilter, ArrayList<ArrayList<String>> queryArray){
+        final int[] i = {0};
+        stringBuilder.
+        append("WHERE ")
+                .append(columnFilter);
+
+        queryArray.forEach(arrayItem -> {
+            if(i[0] > 0){
+                stringBuilder.append("AND ")
+                        .append(columnFilter);
+            }
+            stringBuilder.append(" IN ")
+                    .append('(')
+                    .append(arrayItem.toString().trim(), 1, arrayItem.toString().trim().length() -1)
+                    .append(")")
+                    .append("\n");
+
+            i[0]++;
+        });
+    }
+
+    public void display(){
+        displayQuery(this.table1.getText(), this.attribute1.getText(),this.selectedColumns.getText());
+    }
+
+
 }
