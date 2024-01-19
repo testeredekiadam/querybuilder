@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -18,6 +20,9 @@ public class Controller {
 
     @FXML
     Button updateFiltersButton;
+
+    @FXML
+    Button copyButton;
 
     @FXML
     TextField filePath;
@@ -34,6 +39,9 @@ public class Controller {
     @FXML
     TextField attribute1;
 
+    @FXML
+    TextField selectedColumns;
+
     ArrayList<ArrayList<String>> queryArray = new ArrayList<>();
 
     @FXML
@@ -43,7 +51,7 @@ public class Controller {
     }
 
     @FXML
-    public void onOpenFileClicked() throws NullPointerException, IOException {
+    public void onOpenFileClicked() throws NullPointerException {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -54,16 +62,18 @@ public class Controller {
             Csv a = new Csv(selectedFile.getAbsolutePath());
             a.CsvToString();
             this.queryArray = a.getQueryArray();
-            displayQuery(this.table1.getText(), this.attribute1.getText());
+            displayQuery(this.table1.getText(), this.attribute1.getText(),this.selectedColumns.getText());
         }
     }
 
     @FXML
-    public void displayQuery(String tableName, String attributeName) {
+    public void displayQuery(String tableName, String attributeName, String columns) {
         final int[] i = {0};
 
         StringBuilder queryString = new StringBuilder();
-        queryString.append("SELECT * \n")
+        queryString.append("SELECT ")
+                .append(columns)
+                .append("\n")
                 .append("FROM ")
                 .append(tableName).append("\n")
                 .append("WHERE ")
@@ -71,7 +81,7 @@ public class Controller {
 
         this.queryArray.forEach(arrayItem -> {
             if(i[0] > 0){
-                queryString.append(" AND ")
+                queryString.append("AND ")
                         .append(attributeName);
             }
             queryString.append(" IN ")
@@ -87,6 +97,17 @@ public class Controller {
     }
 
     public void onUpdateFilters() {
-        displayQuery(this.table1.getText(), this.attribute1.getText());
+        displayQuery(this.table1.getText(), this.attribute1.getText(),this.selectedColumns.getText());
+    }
+
+    public void onCopy(){
+        String copyQuery = this.query.getText();
+
+        if(copyQuery != null && !copyQuery.isEmpty()){
+            ClipboardContent content = new ClipboardContent();
+            content.putString(copyQuery);
+            Clipboard.getSystemClipboard().setContent(content);
+        }
+        System.out.println("Copy Clicked");
     }
 }

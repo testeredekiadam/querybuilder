@@ -17,6 +17,7 @@
                 <Button fx:id="openFileButton" text="Open File" onAction="#onOpenFileClicked"/>
             </HBox>
             <HBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-padding: 0 0 10 20">
+                <TextField fx:id="selectedColumns" promptText="Enter columns"/>
                 <TextField fx:id="table1" promptText="Enter table"/>
                 <TextField fx:id="attribute1" promptText="Enter attribute"/>
                 <Button fx:id="updateFiltersButton" text="Update Filters" onAction="#onUpdateFilters"/>
@@ -33,7 +34,7 @@
     </center>
 
     <bottom>
-        <Button text="ok"/>
+        <Button fx:id="copyButton" text="Copy" onAction="#onCopy" />
 
     </bottom>
 </BorderPane>
