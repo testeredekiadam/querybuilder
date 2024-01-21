@@ -15,34 +15,33 @@ import service.Csv;
 import java.io.File;
 import java.util.ArrayList;
 
-public class Controller {
+public class MainController {
 
     @FXML
-    Button copyButton;
+    private Button copyButton;
 
     @FXML
-    Button openFileButton;
+    private Button openFileButton;
 
     @FXML
-    Button displayQueryButton;
+    private Button displayQueryButton;
 
     @FXML
-    TextField filePath;
+    private TextField filePath;
 
     @FXML
-    TextArea query;
-
-
-    @FXML
-    TextField table1;
+    private TextArea query;
 
     @FXML
-    TextField attribute1;
+    private TextField table;
 
     @FXML
-    TextField selectedColumns;
+    private TextField attribute1;
 
-    ArrayList<ArrayList<String>> queryArray = new ArrayList<>();
+    @FXML
+    private TextField selectedColumns;
+
+    private ArrayList<ArrayList<String>> queryArray = new ArrayList<>();
 
     @FXML
     public void initialize(){
@@ -111,7 +110,6 @@ public class Controller {
         stringBuilder.append("\n");
     }
 
-
     public void searchInCsv(StringBuilder stringBuilder, String columnFilter, ArrayList<ArrayList<String>> queryArray){
         final int[] i = {0};
         stringBuilder.
@@ -134,7 +132,7 @@ public class Controller {
     }
 
     public void display(){
-        displayQuery(this.table1.getText(), this.attribute1.getText(),this.selectedColumns.getText());
+        displayQuery(this.table.getText(), this.attribute1.getText(),this.selectedColumns.getText());
     }
 
 
