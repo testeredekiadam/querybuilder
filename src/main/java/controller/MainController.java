@@ -75,6 +75,7 @@ public class MainController {
         }
 
         this.query.setText(queryString.toString());
+
     }
 
     public void onCopy(){
