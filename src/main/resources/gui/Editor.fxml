@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.EditorController">
+
+    <GridPane>
+        <HBox spacing="20" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-padding: 20">
+            <TextField fx:id="filePath" editable="false" promptText="Choose a file" prefWidth="300"  />
+            <Button fx:id="openFileButton" text="Open File" onAction="#onOpenFileClicked"/>
+        </HBox>
+        <HBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-padding: 0 0 10 20">
+            <TextField fx:id="selectedColumns" promptText="Enter columns"/>
+            <TextField fx:id="table" promptText="Enter table"/>
+            <TextField fx:id="attribute" promptText="Enter attribute"/>
+            <TextField fx:id="filterCol" promptText="Enter filter column"/>
+            <TextField fx:id="filter" promptText="Enter filter"/>
+        </HBox>
+        <HBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-padding: 0 0 10 20">
+            <Button fx:id="updateButton" text="Update Filters" onAction="#update"/>
+
+        </HBox>
+
+
+    </GridPane>
+
+</AnchorPane>

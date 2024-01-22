@@ -10,29 +10,37 @@
 
 
     <top>
+        <MenuBar>
+            <Menu text="File">
+                <MenuItem text="Add New Query" onAction="#onAddNewTab"/>
+                <SeparatorMenuItem/>
+            </Menu>
+        </MenuBar>
 
-        <GridPane>
-            <HBox spacing="20" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-padding: 20">
-                <TextField fx:id="filePath" editable="false" promptText="Choose a file" prefWidth="300"  />
-                <Button fx:id="openFileButton" text="Open File" onAction="#onOpenFileClicked"/>
-            </HBox>
-            <HBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-padding: 0 0 10 20">
-                <TextField fx:id="selectedColumns" promptText="Enter columns"/>
-                <TextField fx:id="table" promptText="Enter table"/>
-                <TextField fx:id="attribute" promptText="Enter attribute"/>
-            </HBox>
-            <HBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-padding: 0 0 10 20">
-                <Button fx:id="displayQueryButton" text="Display Query" onAction="#display"/>
 
-            </HBox>
-        </GridPane>
 
     </top>
 
     <center>
-        <TextArea fx:id="query" editable="false">
+        <VBox spacing="20">
+            <TabPane fx:id="tabPane">
+                <Tab text="Tab1">
+                    <content>
+                        <fx:include source="Editor.fxml"/>
+                    </content>
+                </Tab>
+            </TabPane>
 
-        </TextArea>
+            <HBox spacing="20"  style="-fx-padding: 0 0 10 20">
+                <Button fx:id="displayQueryButton" text="Display Query" onAction="#display"/>
+
+            </HBox>
+
+            <TextArea fx:id="query" editable="false">
+
+            </TextArea>
+
+        </VBox>
 
     </center>
 

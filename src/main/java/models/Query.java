@@ -7,9 +7,21 @@ public class Query {
     private StringBuilder from;
     private StringBuilder subBase; // joins
     private StringBuilder filter;
-    private ArrayList<ArrayList<String>> queryArray = new ArrayList<>(); // that comes from csv
+    private ArrayList<ArrayList<String>> queryArray; // that comes from csv
     private StringBuilder queryArrayString;
     private StringBuilder footer;
+    private boolean where;
+
+    public Query(){
+        select = new StringBuilder();
+        from = new StringBuilder();
+        subBase = new StringBuilder(); // joins
+        filter = new StringBuilder();
+        queryArray = new ArrayList<>(); // that comes from csv
+        queryArrayString = new StringBuilder();
+        footer = new StringBuilder();
+        where = false;
+    }
 
     public StringBuilder getSelect() {
         return select;
@@ -67,11 +79,22 @@ public class Query {
         this.queryArrayString = queryArrayString;
     }
 
+    public boolean isWhere() {
+        return where;
+    }
+
+    public void setWhere(boolean where) {
+        this.where = where;
+    }
+
     public StringBuilder display(){
         StringBuilder sb = new StringBuilder();
         sb.append(getSelect()).append(getFrom());
         if(!getSubBase().isEmpty()){
             sb.append(getSubBase());
+        }
+        if(!getFilter().isEmpty()){
+            sb.append(getFilter());
         }
         if(!getQueryArray().isEmpty()){
             sb.append(getQueryArrayString());
