@@ -19,7 +19,7 @@
             <HBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-padding: 0 0 10 20">
                 <TextField fx:id="selectedColumns" promptText="Enter columns"/>
                 <TextField fx:id="table" promptText="Enter table"/>
-                <TextField fx:id="attribute1" promptText="Enter attribute"/>
+                <TextField fx:id="attribute" promptText="Enter attribute"/>
             </HBox>
             <HBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-padding: 0 0 10 20">
                 <Button fx:id="displayQueryButton" text="Display Query" onAction="#display"/>

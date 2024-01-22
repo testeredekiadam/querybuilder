@@ -10,6 +10,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import models.Query;
 import service.Csv;
 
 import java.io.File;
@@ -36,16 +37,20 @@ public class MainController {
     private TextField table;
 
     @FXML
-    private TextField attribute1;
+    private TextField attribute;
 
     @FXML
     private TextField selectedColumns;
 
-    private ArrayList<ArrayList<String>> queryArray = new ArrayList<>();
+    private ArrayList<Query> queryList = new ArrayList<>();
 
     @FXML
     public void initialize(){
-        Platform.runLater(() -> this.openFileButton.requestFocus()
+        Platform.runLater(() -> {
+                    this.openFileButton.requestFocus();
+                    Query query = new Query();
+                    queryList.add(query);
+                }
         );
     }
 
@@ -58,23 +63,23 @@ public class MainController {
 
         if(selectedFile != null){
             this.filePath.setText(selectedFile.getAbsolutePath());
-            Csv a = new Csv(selectedFile.getAbsolutePath());
-            a.CsvToString();
-            this.queryArray = a.getQueryArray();
+            this.queryList.get(0).setQueryArray(Csv.CsvToString(selectedFile.getAbsolutePath()));
         }
     }
 
     @FXML
-    public void displayQuery(String tableName, String attributeName, String columns) {
+    public void displayQuery() {
+        StringBuilder stringBuilder = new StringBuilder();
+        select(selectedColumns.getText());
+        from(table.getText());
+        searchInCsv(attribute.getText(), this.queryList.get(0).getQueryArray() );
 
-        StringBuilder queryString = new StringBuilder();
-        select(queryString,columns);
-        from(queryString, tableName);
-        if(!this.queryArray.isEmpty()) {
-            searchInCsv(queryString, attributeName, this.queryArray);
+        for(Query item : this.queryList){
+            item.setSubBase(new StringBuilder());
+            item.setFooter(new StringBuilder());
+            stringBuilder.append(item.display());
         }
-
-        this.query.setText(queryString.toString());
+        this.query.setText(stringBuilder.toString());
 
     }
 
@@ -89,7 +94,8 @@ public class MainController {
         System.out.println("Copy Clicked");
     }
 
-    public void select(StringBuilder stringBuilder, String columns){
+    public void select(String columns){
+        StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("SELECT ");
         if(!columns.isEmpty()) {
             stringBuilder.append(columns);
@@ -98,9 +104,11 @@ public class MainController {
             stringBuilder.append("*");
         }
         stringBuilder.append("\n");
+        this.queryList.get(0).setSelect(stringBuilder);
     }
 
-    public void from(StringBuilder stringBuilder, String table){
+    public void from(String table){
+        StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("FROM ");
         if(!table.isEmpty()){
             stringBuilder.append(table);
@@ -109,9 +117,12 @@ public class MainController {
             stringBuilder.append(" 'enter table name' ");
         }
         stringBuilder.append("\n");
+        this.queryList.get(0).setFrom(stringBuilder);
+
     }
 
-    public void searchInCsv(StringBuilder stringBuilder, String columnFilter, ArrayList<ArrayList<String>> queryArray){
+    public void searchInCsv( String columnFilter, ArrayList<ArrayList<String>> queryArray){
+        StringBuilder stringBuilder = new StringBuilder();
         final int[] i = {0};
         stringBuilder.
         append("WHERE ")
@@ -130,10 +141,12 @@ public class MainController {
 
             i[0]++;
         });
+
+        this.queryList.get(0).setQueryArrayString(stringBuilder);
     }
 
     public void display(){
-        displayQuery(this.table.getText(), this.attribute1.getText(),this.selectedColumns.getText());
+        displayQuery();
     }
 
 
