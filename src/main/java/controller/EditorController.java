@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.tools.javac.Main;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,29 +18,39 @@ public class EditorController {
 
     @FXML
     private TextField filePath, table, attribute, selectedColumns, filter;
+    Query query;
+    private String tabId;
+    FileChooser fileChooser;
 
 
     @FXML
     public void initialize(){
         Platform.runLater(() -> {
-                    this.openFileButton.requestFocus();
-                    Query query = new Query();
-                    query.setWhere(false);
-                    MainController.addQueryList(query);
+            this.openFileButton.requestFocus();
+            this.query = new Query();
+            System.out.println("tabid in editor:" + this.tabId);
+
+
+
+
+            this.query.setId(this.tabId);
+            this.query.setWhere(false);
+            MainController.addQueryList(this.query);
                 }
         );
     }
 
     @FXML
     public void onOpenFileClicked() throws NullPointerException {
+        System.out.println("pen file clicked "+this.query.getId());
 
-        FileChooser fileChooser = new FileChooser();
+        fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         File selectedFile = fileChooser.showOpenDialog(new Stage());
 
         if(selectedFile != null){
             this.filePath.setText(selectedFile.getAbsolutePath());
-            MainController.getQueryListElement(0).setQueryArray(Csv.CsvToString(selectedFile.getAbsolutePath()));
+            MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setQueryArray(Csv.CsvToString(selectedFile.getAbsolutePath()));
         }
     }
 
@@ -55,7 +64,7 @@ public class EditorController {
             stringBuilder.append("*");
         }
         stringBuilder.append("\n");
-        MainController.getQueryListElement(0).setSelect(stringBuilder);
+        MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setSelect(stringBuilder);
     }
 
     public void from(String table){
@@ -68,7 +77,7 @@ public class EditorController {
             stringBuilder.append(" 'enter table name' ");
         }
         stringBuilder.append("\n");
-        MainController.getQueryListElement(0).setFrom(stringBuilder);
+        MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setFrom(stringBuilder);
 
     }
 
@@ -79,30 +88,30 @@ public class EditorController {
         }
         else{
             stringBuilder = new StringBuilder();
-            if(MainController.getQueryListElement(0).isWhere()){
+            if(MainController.getQueryListElement(Integer.parseInt(this.query.getId())).isWhere()){
                 stringBuilder.append(" AND ");
             }
 
-            if(!MainController.getQueryListElement(0).isWhere()){
+            if(!MainController.getQueryListElement(Integer.parseInt(this.query.getId())).isWhere()){
                 stringBuilder.append("WHERE ");
-                MainController.getQueryListElement(0).setWhere(true);
+                MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setWhere(true);
             }
             stringBuilder.append(column).append(" IN ").append(filter);
         }
-        MainController.getQueryListElement(0).setFilter(stringBuilder);
+        MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setFilter(stringBuilder);
     }
 
     public void searchInCsv( String columnFilter, ArrayList<ArrayList<String>> queryArray){
         StringBuilder stringBuilder = new StringBuilder();
         final int[] i = {0};
 
-        if(MainController.getQueryListElement(0).isWhere()){
+        if(MainController.getQueryListElement(Integer.parseInt(this.query.getId())).isWhere()){
             stringBuilder.append("AND ");
         }
 
-        if(!MainController.getQueryListElement(0).isWhere()){
+        if(!MainController.getQueryListElement(Integer.parseInt(this.query.getId())).isWhere()){
             stringBuilder.append("WHERE ");
-            MainController.getQueryListElement(0).setWhere(true);
+            MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setWhere(true);
         }
 
 
@@ -123,7 +132,7 @@ public class EditorController {
             i[0]++;
         });
 
-        MainController.getQueryListElement(0).setQueryArrayString(stringBuilder);
+        MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setQueryArrayString(stringBuilder);
     }
 
     public void update(){
@@ -131,7 +140,11 @@ public class EditorController {
         from(table.getText());
         where(attribute.getText(), filter.getText());
 
-        searchInCsv(attribute.getText(), MainController.getQueryListElement(0).getQueryArray() );
+        searchInCsv(attribute.getText(), MainController.getQueryListElement(Integer.parseInt(this.query.getId())).getQueryArray() );
     }
 
+
+    public void setTabId(String tabId) {
+        this.tabId = tabId;
+    }
 }

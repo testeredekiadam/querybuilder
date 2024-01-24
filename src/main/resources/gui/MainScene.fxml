@@ -24,11 +24,11 @@
     <center>
         <VBox spacing="20">
             <TabPane fx:id="tabPane">
-                <Tab text="Tab1">
+<!--                <Tab text="Query Tab" closable="false" id="0">
                     <content>
                         <fx:include source="Editor.fxml"/>
                     </content>
-                </Tab>
+                </Tab>-->
             </TabPane>
 
             <HBox spacing="20"  style="-fx-padding: 0 0 10 20">

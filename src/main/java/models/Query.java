@@ -3,6 +3,8 @@ package models;
 import java.util.ArrayList;
 
 public class Query {
+
+    private String Id;
     private StringBuilder select;
     private StringBuilder from;
     private StringBuilder subBase; // joins
@@ -85,6 +87,14 @@ public class Query {
 
     public void setWhere(boolean where) {
         this.where = where;
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
     }
 
     public StringBuilder display(){
