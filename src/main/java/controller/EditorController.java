@@ -18,7 +18,7 @@ public class EditorController {
     private Button openFileButton, updateButton;
 
     @FXML
-    private TextField filePath, table, attribute, selectedColumns, filterCol, filter;
+    private TextField filePath, table, attribute, selectedColumns, filter;
 
 
     @FXML
@@ -129,7 +129,8 @@ public class EditorController {
     public void update(){
         select(selectedColumns.getText());
         from(table.getText());
-        where(filterCol.getText(), filter.getText());
+        where(attribute.getText(), filter.getText());
+
         searchInCsv(attribute.getText(), MainController.getQueryListElement(0).getQueryArray() );
     }
 

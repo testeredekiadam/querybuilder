@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -38,8 +39,6 @@ public class MainController {
         if(query != null){
 
             for (Query item : queryList) {
-                item.setSubBase(new StringBuilder());
-                item.setFooter(new StringBuilder());
                 stringBuilder.append(item.display());
                 item.setWhere(false);
             }
@@ -75,10 +74,18 @@ public class MainController {
 
     public void onAddNewTab(){
         Tab newTab= new Tab("Tab "+(queryList.size()+1));
+        newTab.setId(String.valueOf(queryList.size()));
+        System.out.println(newTab.getId());
+        newTab.setOnClosed((Event t) -> {
+            queryList.remove(Integer.parseInt(newTab.getId()));
+            System.out.println(queryList.size());
+                }
+        );
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/Editor.fxml"));
             Parent content = loader.load();
             newTab.setContent(content);
+
         }catch (IOException e) {
             System.out.println(e.getMessage());
         }
