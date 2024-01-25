@@ -30,9 +30,6 @@ public class EditorController {
             this.query = new Query();
             System.out.println("tabid in editor:" + this.tabId);
 
-
-
-
             this.query.setId(this.tabId);
             this.query.setWhere(false);
             MainController.addQueryList(this.query);
