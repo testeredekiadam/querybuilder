@@ -40,6 +40,9 @@ public class MainController {
         if(query != null){
 
             for (Query item : queryList) {
+                if(!queryList.get(0).equals(item)){
+                    stringBuilder.append("\nUNION\n\n");
+                }
                 stringBuilder.append(item.display());
                 item.setWhere(false);
 
