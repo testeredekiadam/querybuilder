@@ -11,13 +11,15 @@
             <TextField fx:id="filePath" editable="false" promptText="Choose a file" prefWidth="300"  />
             <Button fx:id="openFileButton" text="Open File" onAction="#onOpenFileClicked"/>
         </HBox>
-        <HBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-padding: 0 0 10 20">
+        <VBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-padding: 0 0 10 20">
             <TextField fx:id="selectedColumns" promptText="Enter columns"/>
             <TextField fx:id="table" promptText="Enter table"/>
-            <TextField fx:id="attribute" promptText="Enter attribute"/>
-            <ChoiceBox fx:id="filterChoiceBox" value="In" prefWidth="150"/>
-            <TextField fx:id="filter" promptText="Enter filter"/>
-        </HBox>
+            <HBox spacing="20">
+                <TextField fx:id="attribute" promptText="Enter attribute"/>
+                <ChoiceBox fx:id="filterChoiceBox" value="In" prefWidth="150"/>
+                <TextField fx:id="filter" promptText="Enter filter"/>
+            </HBox>
+        </VBox>
         <HBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-padding: 0 0 10 20">
             <Button fx:id="updateButton" text="Update Filters" onAction="#update"/>
 
