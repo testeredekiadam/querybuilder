@@ -81,7 +81,6 @@ public class MainController implements Initializable {
         Tab newTab = new Tab("Query Tab");
         newTab.setId(String.valueOf(tabId));
 
-
         System.out.println("saved: " + tabId);
 
         System.out.println(newTab.getId());
@@ -91,7 +90,7 @@ public class MainController implements Initializable {
             System.out.println("deleted: " + tabId);
             tabId--;
             System.out.println("New total: " + tabId);
-                }
+            }
         );
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/Editor.fxml"));
@@ -99,7 +98,6 @@ public class MainController implements Initializable {
         editorController.setTabId(String.valueOf(tabId));
         loader.setController(editorController);
         try {
-
 
             Parent content = loader.load();
             newTab.setContent(content);

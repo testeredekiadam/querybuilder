@@ -2,10 +2,14 @@ package controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Query;
@@ -18,11 +22,13 @@ import java.util.ResourceBundle;
 
 public class EditorController implements Initializable {
     @FXML
-    private Button openFileButton, updateButton;
+    private Button openFileButton, updateButton, joinButton;
     @FXML
     private TextField filePath, table, attribute, selectedColumns, filter;
     @FXML
     private ChoiceBox<String> filterChoiceBox;
+    @FXML
+    private FlowPane joinPane;
 
     private final String[] options = {"In", "Equal", "Greater than", "Less than", "Greater than or equal", "Less than or equal", "Not equal", "Between", "Like"};
     private String choice;
@@ -159,8 +165,6 @@ public class EditorController implements Initializable {
         from(table.getText());
         where(attribute.getText(), filter.getText());
 
-
-
         searchInCsv(attribute.getText(), MainController.getQueryListElement(Integer.parseInt(this.query.getId())).getQueryArray() );
     }
 
@@ -173,5 +177,16 @@ public class EditorController implements Initializable {
         this.choice = filterChoiceBox.getValue();
     }
 
+    public void addJoin(){
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/Join.fxml"));
+        try {
+            Parent content = loader.load();
+            this.joinPane.getChildren().add(content);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
 
 }
