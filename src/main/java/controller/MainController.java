@@ -3,6 +3,7 @@ package controller;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -14,9 +15,11 @@ import javafx.scene.input.ClipboardContent;
 import models.Query;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class MainController {
+public class MainController implements Initializable {
 
     @FXML
     private Button copyButton, displayQueryButton;
@@ -113,4 +116,9 @@ public class MainController {
         queryList.removeIf(query -> query.getId().equals(tabId));
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        onAddNewTab();
+        this.tabPane.getTabs().get(0).setClosable(false);
+    }
 }
