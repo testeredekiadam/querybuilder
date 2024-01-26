@@ -25,7 +25,7 @@ public class EditorController implements Initializable {
     private ChoiceBox<String> filterChoiceBox;
 
     private final String[] options = {"In", "Equal", "Greater than", "Less than", "Greater than or equal", "Less than or equal", "Not equal", "Between", "Like"};
-    private String choice = "In";
+    private String choice;
     Query query;
     private String tabId;
     FileChooser fileChooser;
