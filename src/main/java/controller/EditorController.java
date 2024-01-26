@@ -12,6 +12,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import models.Join;
 import models.Query;
 import service.Csv;
 
@@ -36,6 +37,14 @@ public class EditorController implements Initializable {
     private String tabId;
     FileChooser fileChooser;
 
+    private static final ArrayList<Join> joinList = new ArrayList<>();
+
+    private static int joinId = 0;
+
+    public int getJoinId() {
+        return joinId;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.openFileButton.requestFocus();
@@ -50,7 +59,7 @@ public class EditorController implements Initializable {
 
     @FXML
     public void onOpenFileClicked() throws NullPointerException {
-        System.out.println("pen file clicked "+this.query.getId());
+        System.out.println("Open file clicked "+this.query.getId());
 
         fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -119,7 +128,7 @@ public class EditorController implements Initializable {
                 case "Like" -> stringBuilder.append(" LIKE ");
                 default -> stringBuilder.append(" IN ");
             }
-            stringBuilder.append(filter);
+            stringBuilder.append(filter).append("\n");
         }
         MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setFilter(stringBuilder);
     }
@@ -180,6 +189,9 @@ public class EditorController implements Initializable {
     public void addJoin(){
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/Join.fxml"));
+        JoinController joinController = new JoinController();
+        joinController.setJoinId(String.valueOf(joinId));
+        loader.setController(joinController);
         try {
             Parent content = loader.load();
             this.joinPane.getChildren().add(content);
@@ -187,6 +199,20 @@ public class EditorController implements Initializable {
             System.out.println(e.getMessage());
         }
 
+        joinId++;
+        System.out.println("+Join id: " + joinId);
+    }
+
+    public static void deleteJoinById(String id){
+        joinList.removeIf(join -> join.getId().equals(id));
+        joinId--;
+        System.out.println("-Join id: " + joinId);
+        System.out.println("List delete size: "+joinList.size());
+    }
+
+    public static void addJoinList(Join join){
+        joinList.add(join);
+        System.out.println("List add size" + joinList.size());
     }
 
 }

@@ -9,7 +9,7 @@ public class Query {
     private StringBuilder from;
     private StringBuilder subBase; // joins
     private StringBuilder filter;
-    private ArrayList<ArrayList<String>> queryArray; // that comes from csv
+    private ArrayList<ArrayList<String>> queryArray;
     private StringBuilder queryArrayString;
     private StringBuilder footer;
     private boolean where;

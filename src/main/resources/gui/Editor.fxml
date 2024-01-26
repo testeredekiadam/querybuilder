@@ -14,7 +14,7 @@
         <VBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-padding: 0 0 10 20">
             <TextField fx:id="selectedColumns" promptText="Enter columns"/>
             <TextField fx:id="table" promptText="Enter table"/>
-            <FlowPane fx:id="joinPane" orientation="VERTICAL" prefHeight="100"/>
+            <FlowPane fx:id="joinPane" orientation="VERTICAL" minHeight="100"/>
             <Button fx:id="joinButton" text="Join" onAction="#addJoin"/>
             <HBox spacing="20">
                 <TextField fx:id="attribute" promptText="Enter attribute"/>
