@@ -213,6 +213,9 @@ public class EditorController implements Initializable {
     public static void addJoinList(Join join){
         joinList.add(join);
         System.out.println("List add size" + joinList.size());
+        for(Join join1 : joinList){
+            System.out.println("Table name: " + join1.getTableName());
+        }
     }
 
 }

@@ -16,7 +16,10 @@ public class JoinController implements Initializable {
     private String joinId;
 
     @FXML
-    private TextField joinTable, joinPredicate;
+    private TextField joinTable;
+    @FXML
+    private TextField joinPredicate;
+
 
     @FXML
     private Button discardButton;
@@ -32,8 +35,13 @@ public class JoinController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.join = new Join();
+        this.joinTable.textProperty().addListener((observable, oldValue, newValue) -> {
+            this.join.setTableName(newValue);
+            System.out.println("Join Table: " +newValue);
+        });
         EditorController.addJoinList(join);
         this.join.setId(this.joinId);
+
     }
 
     @FXML
@@ -44,5 +52,9 @@ public class JoinController implements Initializable {
         parentFlow.getChildren().remove(parentPane);
         EditorController.deleteJoinById(this.join.getId());
         System.out.println("deleted: " + this.join.getId());
+
     }
+
+
+
 }

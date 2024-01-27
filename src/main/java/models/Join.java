@@ -3,12 +3,12 @@ package models;
 public class Join {
 
     private String Id;
-    private StringBuilder tableName;
-    private StringBuilder onJoin;
+    private String tableName;
+    private String onJoin;
 
     public Join(){
-        this.tableName = new StringBuilder();
-        this.onJoin = new StringBuilder();
+        this.tableName = "";
+        this.onJoin = "";
     }
 
     public String getId() {
@@ -19,19 +19,19 @@ public class Join {
         Id = id;
     }
 
-    public StringBuilder getTableName() {
+    public String getTableName() {
         return tableName;
     }
 
-    public void setTableName(StringBuilder tableName) {
+    public void setTableName(String tableName) {
         this.tableName = tableName;
     }
 
-    public StringBuilder getOnJoin() {
+    public String getOnJoin() {
         return onJoin;
     }
 
-    public void setOnJoin(StringBuilder onJoin) {
+    public void setOnJoin(String onJoin) {
         this.onJoin = onJoin;
     }
 }
