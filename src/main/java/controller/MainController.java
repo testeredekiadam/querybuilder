@@ -1,81 +1,57 @@
 package controller;
 
-import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
-import service.Csv;
+import models.Query;
 
-import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class MainController {
-
-    @FXML
-    private Button copyButton;
+public class MainController implements Initializable {
 
     @FXML
-    private Button openFileButton;
-
-    @FXML
-    private Button displayQueryButton;
-
-    @FXML
-    private TextField filePath;
-
+    private Button copyButton, displayQueryButton;
     @FXML
     private TextArea query;
-
     @FXML
-    private TextField table;
+    private TabPane tabPane;
 
-    @FXML
-    private TextField attribute1;
+    private static final ArrayList<Query> queryList = new ArrayList<>();
+    public static int tabId=0;
 
-    @FXML
-    private TextField selectedColumns;
-
-    private ArrayList<ArrayList<String>> queryArray = new ArrayList<>();
-
-    @FXML
-    public void initialize(){
-        Platform.runLater(() -> this.openFileButton.requestFocus()
-        );
+    public static String getTabId() {
+        return String.valueOf(tabId);
     }
 
-    @FXML
-    public void onOpenFileClicked() throws NullPointerException {
-
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        File selectedFile = fileChooser.showOpenDialog(new Stage());
-
-        if(selectedFile != null){
-            this.filePath.setText(selectedFile.getAbsolutePath());
-            Csv a = new Csv(selectedFile.getAbsolutePath());
-            a.CsvToString();
-            this.queryArray = a.getQueryArray();
-        }
-    }
 
     @FXML
-    public void displayQuery(String tableName, String attributeName, String columns) {
+    public void displayQuery() {
 
-        StringBuilder queryString = new StringBuilder();
-        select(queryString,columns);
-        from(queryString, tableName);
-        if(!this.queryArray.isEmpty()) {
-            searchInCsv(queryString, attributeName, this.queryArray);
+        StringBuilder stringBuilder = new StringBuilder();
+        if(query != null){
+
+            for (Query item : queryList) {
+                if(!queryList.get(0).equals(item)){
+                    stringBuilder.append("\nUNION\n\n");
+                }
+                stringBuilder.append(item.display());
+                item.setWhere(false);
+
+            }
+            this.query.setText(stringBuilder.toString());
         }
-
-        this.query.setText(queryString.toString());
-
     }
 
     public void onCopy(){
@@ -89,52 +65,58 @@ public class MainController {
         System.out.println("Copy Clicked");
     }
 
-    public void select(StringBuilder stringBuilder, String columns){
-        stringBuilder.append("SELECT ");
-        if(!columns.isEmpty()) {
-            stringBuilder.append(columns);
-        }
-        else {
-            stringBuilder.append("*");
-        }
-        stringBuilder.append("\n");
-    }
-
-    public void from(StringBuilder stringBuilder, String table){
-        stringBuilder.append("FROM ");
-        if(!table.isEmpty()){
-            stringBuilder.append(table);
-        }
-        else {
-            stringBuilder.append(" 'enter table name' ");
-        }
-        stringBuilder.append("\n");
-    }
-
-    public void searchInCsv(StringBuilder stringBuilder, String columnFilter, ArrayList<ArrayList<String>> queryArray){
-        final int[] i = {0};
-        stringBuilder.
-        append("WHERE ")
-                .append(columnFilter);
-
-        queryArray.forEach(arrayItem -> {
-            if(i[0] > 0){
-                stringBuilder.append("AND ")
-                        .append(columnFilter);
-            }
-            stringBuilder.append(" IN ")
-                    .append('(')
-                    .append(arrayItem.toString().trim(), 1, arrayItem.toString().trim().length() -1)
-                    .append(")")
-                    .append("\n");
-
-            i[0]++;
-        });
-    }
-
     public void display(){
-        displayQuery(this.table.getText(), this.attribute1.getText(),this.selectedColumns.getText());
+        displayQuery();
     }
 
+    public static void addQueryList(Query query){
+        queryList.add(query);
+    }
 
+    public static Query getQueryListElement(int index){
+        return queryList.get(index);
+    }
+
+    public void onAddNewTab(){
+        Tab newTab = new Tab("Query Tab");
+        newTab.setId(String.valueOf(tabId));
+
+        System.out.println("saved: " + tabId);
+
+        System.out.println(newTab.getId());
+        newTab.setOnClosed((Event t) -> {
+            removeByTabId(newTab.getId());
+            System.out.println(queryList.size());
+            System.out.println("deleted: " + tabId);
+            tabId--;
+            System.out.println("New total: " + tabId);
+            }
+        );
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/Editor.fxml"));
+        EditorController editorController = new EditorController();
+        editorController.setTabId(String.valueOf(tabId));
+        loader.setController(editorController);
+        try {
+
+            Parent content = loader.load();
+            newTab.setContent(content);
+            System.out.println(newTab.getText());
+
+        }catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        tabPane.getTabs().add(newTab);
+        tabId++;
+    }
+
+    private void removeByTabId(String tabId){
+        queryList.removeIf(query -> query.getId().equals(tabId));
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        onAddNewTab();
+        this.tabPane.getTabs().get(0).setClosable(false);
+    }
 }

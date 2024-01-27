@@ -9,17 +9,15 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class Csv {
-    private final String inputFile;
 
-    private final ArrayList<ArrayList<String>> queryArray = new ArrayList<>();
 
-    public Csv(String input){
-        this.inputFile = input;
-    }
 
-    public void CsvToString (){
 
-        try (CSVReader reader = new CSVReader(new FileReader(this.inputFile))) {
+    public static ArrayList<ArrayList<String>> CsvToString (String inputFile){
+
+        ArrayList<ArrayList<String>> queryArray = new ArrayList<>();
+
+        try (CSVReader reader = new CSVReader(new FileReader(inputFile))) {
 
 
             ArrayList<String> partQueryArray = new ArrayList<>();
@@ -30,7 +28,7 @@ public class Csv {
             while ((nextLine = reader.readNext()) != null) {
 
                 if(i%900==0){
-                    this.queryArray.add(partQueryArray);
+                    queryArray.add(partQueryArray);
                     partQueryArray = new ArrayList<>();
                 }
 
@@ -46,18 +44,14 @@ public class Csv {
             }
 
 
-            this.queryArray.add(partQueryArray);
-/*            System.out.println(i);
-            System.out.println(this.queryArray);*/
+            queryArray.add(partQueryArray);
 
         } catch (IOException | CsvValidationException e) {
             System.out.println(e.getMessage());
         }
-    }
 
-
-    public ArrayList<ArrayList<String>> getQueryArray() {
         return queryArray;
     }
+
 
 }

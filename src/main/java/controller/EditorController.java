@@ -1,0 +1,221 @@
+package controller;
+
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import models.Join;
+import models.Query;
+import service.Csv;
+
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+public class EditorController implements Initializable {
+    @FXML
+    private Button openFileButton, updateButton, joinButton;
+    @FXML
+    private TextField filePath, table, attribute, selectedColumns, filter;
+    @FXML
+    private ChoiceBox<String> filterChoiceBox;
+    @FXML
+    private FlowPane joinPane;
+
+    private final String[] options = {"In", "Equal", "Greater than", "Less than", "Greater than or equal", "Less than or equal", "Not equal", "Between", "Like"};
+    private String choice;
+    Query query;
+    private String tabId;
+    FileChooser fileChooser;
+
+    private static final ArrayList<Join> joinList = new ArrayList<>();
+
+    private static int joinId = 0;
+
+    public int getJoinId() {
+        return joinId;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.openFileButton.requestFocus();
+        this.query = new Query();
+        System.out.println("tabid in editor:" + this.tabId);
+        filterChoiceBox.getItems().addAll(options);
+
+        this.query.setId(this.tabId);
+        this.query.setWhere(false);
+        MainController.addQueryList(this.query);
+    }
+
+    @FXML
+    public void onOpenFileClicked() throws NullPointerException {
+        System.out.println("Open file clicked "+this.query.getId());
+
+        fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+
+        if(selectedFile != null){
+            this.filePath.setText(selectedFile.getAbsolutePath());
+            MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setQueryArray(Csv.CsvToString(selectedFile.getAbsolutePath()));
+        }
+    }
+
+    public void select(String columns){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("SELECT ");
+        if(!columns.isEmpty()) {
+            stringBuilder.append(columns);
+        }
+        else {
+            stringBuilder.append("*");
+        }
+        stringBuilder.append("\n");
+        MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setSelect(stringBuilder);
+    }
+
+    public void from(String table){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("FROM ");
+        if(!table.isEmpty()){
+            stringBuilder.append(table);
+        }
+        else {
+            stringBuilder.append(" 'enter table name' ");
+        }
+        stringBuilder.append("\n");
+        MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setFrom(stringBuilder);
+
+    }
+
+    public void where(String column, String filter){
+        StringBuilder stringBuilder;
+        if(column.isEmpty() || filter.isEmpty()){
+            stringBuilder = new StringBuilder();
+        }
+        else{
+            stringBuilder = new StringBuilder();
+            if(MainController.getQueryListElement(Integer.parseInt(this.query.getId())).isWhere()){
+                stringBuilder.append(" AND ");
+            }
+
+            if(!MainController.getQueryListElement(Integer.parseInt(this.query.getId())).isWhere()){
+                stringBuilder.append("WHERE ");
+                MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setWhere(true);
+            }
+            stringBuilder.append(column);
+
+            System.out.println("in where " + this.choice);
+
+            switch (this.choice) {
+                case "Equal" -> stringBuilder.append(" = ");
+                case "Greater than" -> stringBuilder.append(" > ");
+                case "Less than" -> stringBuilder.append(" < ");
+                case "Greater than or equal" -> stringBuilder.append(" >= ");
+                case "Less than or equal" -> stringBuilder.append(" <= ");
+                case "Not equal" -> stringBuilder.append(" <> ");
+                case "Between" -> stringBuilder.append(" BETWEEN ");
+                case "Like" -> stringBuilder.append(" LIKE ");
+                default -> stringBuilder.append(" IN ");
+            }
+            stringBuilder.append(filter).append("\n");
+        }
+        MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setFilter(stringBuilder);
+    }
+
+    public void searchInCsv( String columnFilter, ArrayList<ArrayList<String>> queryArray){
+        StringBuilder stringBuilder = new StringBuilder();
+        final int[] i = {0};
+
+        if(MainController.getQueryListElement(Integer.parseInt(this.query.getId())).isWhere()){
+            stringBuilder.append("AND ");
+        }
+
+        if(!MainController.getQueryListElement(Integer.parseInt(this.query.getId())).isWhere()){
+            stringBuilder.append("WHERE ");
+            MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setWhere(true);
+        }
+
+
+        stringBuilder
+                .append(columnFilter);
+
+        queryArray.forEach(arrayItem -> {
+            if(i[0] > 0){
+                stringBuilder.append("AND ")
+                        .append(columnFilter);
+            }
+            stringBuilder.append(" IN ")
+                    .append('(')
+                    .append(arrayItem.toString().trim(), 1, arrayItem.toString().trim().length() -1)
+                    .append(")")
+                    .append("\n");
+
+            i[0]++;
+        });
+
+        MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setQueryArrayString(stringBuilder);
+    }
+
+    public void update(){
+        getFilterChoice();
+        System.out.println(this.choice);
+        select(selectedColumns.getText());
+        from(table.getText());
+        where(attribute.getText(), filter.getText());
+
+        searchInCsv(attribute.getText(), MainController.getQueryListElement(Integer.parseInt(this.query.getId())).getQueryArray() );
+    }
+
+
+    public void setTabId(String tabId) {
+        this.tabId = tabId;
+    }
+
+    public void getFilterChoice(){
+        this.choice = filterChoiceBox.getValue();
+    }
+
+    public void addJoin(){
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/Join.fxml"));
+        JoinController joinController = new JoinController();
+        joinController.setJoinId(String.valueOf(joinId));
+        loader.setController(joinController);
+        try {
+            Parent content = loader.load();
+            this.joinPane.getChildren().add(content);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        joinId++;
+        System.out.println("+Join id: " + joinId);
+    }
+
+    public static void deleteJoinById(String id){
+        joinList.removeIf(join -> join.getId().equals(id));
+        joinId--;
+        System.out.println("-Join id: " + joinId);
+        System.out.println("List delete size: "+joinList.size());
+    }
+
+    public static void addJoinList(Join join){
+        joinList.add(join);
+        System.out.println("List add size" + joinList.size());
+        for(Join join1 : joinList){
+            System.out.println("Table name: " + join1.getTableName());
+        }
+    }
+
+}

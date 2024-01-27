@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -27,7 +28,6 @@ public class GuiStarter extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/gui/MainScene.fxml")));
-
 
         stage.setTitle("Query Builder");
         stage.setScene(new Scene(root, 700, 700));
