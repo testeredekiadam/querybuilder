@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Join;
@@ -67,7 +65,7 @@ public class EditorController implements Initializable {
 
         if(selectedFile != null){
             this.filePath.setText(selectedFile.getAbsolutePath());
-            MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setQueryArray(Csv.CsvToString(selectedFile.getAbsolutePath()));
+            MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setCsvArray(Csv.CsvToString(selectedFile.getAbsolutePath()));
         }
     }
 
@@ -164,7 +162,7 @@ public class EditorController implements Initializable {
             i[0]++;
         });
 
-        MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setQueryArrayString(stringBuilder);
+        MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setCsvArrayString(stringBuilder);
     }
 
     public void update(){
@@ -174,7 +172,7 @@ public class EditorController implements Initializable {
         from(table.getText());
         where(attribute.getText(), filter.getText());
 
-        searchInCsv(attribute.getText(), MainController.getQueryListElement(Integer.parseInt(this.query.getId())).getQueryArray() );
+        searchInCsv(attribute.getText(), MainController.getQueryListElement(Integer.parseInt(this.query.getId())).getCsvArray() );
     }
 
 

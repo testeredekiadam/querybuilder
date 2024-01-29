@@ -7,20 +7,20 @@ public class Query {
     private String Id;
     private StringBuilder select;
     private StringBuilder from;
-    private StringBuilder subBase; // joins
+    private StringBuilder join; // joins
     private StringBuilder filter;
-    private ArrayList<ArrayList<String>> queryArray;
-    private StringBuilder queryArrayString;
+    private ArrayList<ArrayList<String>> csvArray;
+    private StringBuilder csvArrayString;
     private StringBuilder footer;
     private boolean where;
 
     public Query(){
         select = new StringBuilder();
         from = new StringBuilder();
-        subBase = new StringBuilder(); // joins
+        join = new StringBuilder(); // joins
         filter = new StringBuilder();
-        queryArray = new ArrayList<>(); // that comes from csv
-        queryArrayString = new StringBuilder();
+        csvArray = new ArrayList<>(); // that comes from csv
+        csvArrayString = new StringBuilder();
         footer = new StringBuilder();
         where = false;
     }
@@ -41,12 +41,12 @@ public class Query {
         this.from = from;
     }
 
-    public StringBuilder getSubBase() {
-        return subBase;
+    public StringBuilder getJoin() {
+        return join;
     }
 
-    public void setSubBase(StringBuilder subBase) {
-        this.subBase = subBase;
+    public void setJoin(StringBuilder join) {
+        this.join = join;
     }
 
     public StringBuilder getFilter() {
@@ -57,12 +57,12 @@ public class Query {
         this.filter = filter;
     }
 
-    public ArrayList<ArrayList<String>> getQueryArray() {
-        return queryArray;
+    public ArrayList<ArrayList<String>> getCsvArray() {
+        return csvArray;
     }
 
-    public void setQueryArray(ArrayList<ArrayList<String>> queryArray) {
-        this.queryArray = queryArray;
+    public void setCsvArray(ArrayList<ArrayList<String>> csvArray) {
+        this.csvArray = csvArray;
     }
 
     public StringBuilder getFooter() {
@@ -73,12 +73,12 @@ public class Query {
         this.footer = footer;
     }
 
-    public StringBuilder getQueryArrayString() {
-        return queryArrayString;
+    public StringBuilder getCsvArrayString() {
+        return csvArrayString;
     }
 
-    public void setQueryArrayString(StringBuilder queryArrayString) {
-        this.queryArrayString = queryArrayString;
+    public void setCsvArrayString(StringBuilder csvArrayString) {
+        this.csvArrayString = csvArrayString;
     }
 
     public boolean isWhere() {
@@ -100,14 +100,14 @@ public class Query {
     public StringBuilder display(){
         StringBuilder sb = new StringBuilder();
         sb.append(getSelect()).append(getFrom());
-        if(!getSubBase().isEmpty()){
-            sb.append(getSubBase());
+        if(!getJoin().isEmpty()){
+            sb.append(getJoin());
         }
         if(!getFilter().isEmpty()){
             sb.append(getFilter());
         }
-        if(!getQueryArray().isEmpty()){
-            sb.append(getQueryArrayString());
+        if(!getCsvArray().isEmpty()){
+            sb.append(getCsvArrayString());
         }
         if(!getFooter().isEmpty()){
             sb.append(getFooter());
