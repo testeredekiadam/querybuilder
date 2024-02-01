@@ -36,7 +36,7 @@ public class EditorController implements Initializable {
     private String tabId;
     FileChooser fileChooser;
 
-    private static final ArrayList<Join> joinList = new ArrayList<>();
+    private static ArrayList<Join> joinList;
 
     private static int joinId = 0;
 
@@ -48,6 +48,7 @@ public class EditorController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.openFileButton.requestFocus();
         this.query = new Query();
+        joinList  = new ArrayList<>();
         filterChoiceBox.getItems().addAll(options);
 
         this.query.setId(this.tabId);
