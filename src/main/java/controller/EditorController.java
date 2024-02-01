@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import models.Join;
 import models.Query;
 import service.Csv;
+import service.QueryComponents;
 
 import java.io.File;
 import java.net.URL;
@@ -47,7 +48,6 @@ public class EditorController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.openFileButton.requestFocus();
         this.query = new Query();
-        System.out.println("tabid in editor:" + this.tabId);
         filterChoiceBox.getItems().addAll(options);
 
         this.query.setId(this.tabId);
@@ -57,7 +57,6 @@ public class EditorController implements Initializable {
 
     @FXML
     public void onOpenFileClicked() throws NullPointerException {
-        System.out.println("Open file clicked "+this.query.getId());
 
         fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -69,110 +68,14 @@ public class EditorController implements Initializable {
         }
     }
 
-    public void select(String columns){
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("SELECT ");
-        if(!columns.isEmpty()) {
-            stringBuilder.append(columns);
-        }
-        else {
-            stringBuilder.append("*");
-        }
-        stringBuilder.append("\n");
-        MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setSelect(stringBuilder);
-    }
-
-    public void from(String table){
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("FROM ");
-        if(!table.isEmpty()){
-            stringBuilder.append(table);
-        }
-        else {
-            stringBuilder.append(" 'enter table name' ");
-        }
-        stringBuilder.append("\n");
-        MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setFrom(stringBuilder);
-
-    }
-
-    public void where(String column, String filter){
-        StringBuilder stringBuilder;
-        if(column.isEmpty() || filter.isEmpty()){
-            stringBuilder = new StringBuilder();
-        }
-        else{
-            stringBuilder = new StringBuilder();
-            if(MainController.getQueryListElement(Integer.parseInt(this.query.getId())).isWhere()){
-                stringBuilder.append(" AND ");
-            }
-
-            if(!MainController.getQueryListElement(Integer.parseInt(this.query.getId())).isWhere()){
-                stringBuilder.append("WHERE ");
-                MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setWhere(true);
-            }
-            stringBuilder.append(column);
-
-            System.out.println("in where " + this.choice);
-
-            switch (this.choice) {
-                case "Equal" -> stringBuilder.append(" = ");
-                case "Greater than" -> stringBuilder.append(" > ");
-                case "Less than" -> stringBuilder.append(" < ");
-                case "Greater than or equal" -> stringBuilder.append(" >= ");
-                case "Less than or equal" -> stringBuilder.append(" <= ");
-                case "Not equal" -> stringBuilder.append(" <> ");
-                case "Between" -> stringBuilder.append(" BETWEEN ");
-                case "Like" -> stringBuilder.append(" LIKE ");
-                default -> stringBuilder.append(" IN ");
-            }
-            stringBuilder.append(filter).append("\n");
-        }
-        MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setFilter(stringBuilder);
-    }
-
-    public void searchInCsv( String columnFilter, ArrayList<ArrayList<String>> queryArray){
-        StringBuilder stringBuilder = new StringBuilder();
-        final int[] i = {0};
-
-        if(MainController.getQueryListElement(Integer.parseInt(this.query.getId())).isWhere()){
-            stringBuilder.append("AND ");
-        }
-
-        if(!MainController.getQueryListElement(Integer.parseInt(this.query.getId())).isWhere()){
-            stringBuilder.append("WHERE ");
-            MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setWhere(true);
-        }
-
-
-        stringBuilder
-                .append(columnFilter);
-
-        queryArray.forEach(arrayItem -> {
-            if(i[0] > 0){
-                stringBuilder.append("AND ")
-                        .append(columnFilter);
-            }
-            stringBuilder.append(" IN ")
-                    .append('(')
-                    .append(arrayItem.toString().trim(), 1, arrayItem.toString().trim().length() -1)
-                    .append(")")
-                    .append("\n");
-
-            i[0]++;
-        });
-
-        MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setCsvArrayString(stringBuilder);
-    }
-
     public void update(){
         getFilterChoice();
-        System.out.println(this.choice);
-        select(selectedColumns.getText());
-        from(table.getText());
-        where(attribute.getText(), filter.getText());
+        QueryComponents.selectComponent(this.query, selectedColumns.getText());
+        QueryComponents.fromComponent(this.query, table.getText());
+        QueryComponents.whereComponent(this.query, this.choice, attribute.getText(), filter.getText());
+        QueryComponents.searchInCsv(this.query, attribute.getText(), MainController.getQueryListElement(Integer.parseInt(this.query.getId())).getCsvArray());
+        QueryComponents.joinComponent(this.query, joinList);
 
-        searchInCsv(attribute.getText(), MainController.getQueryListElement(Integer.parseInt(this.query.getId())).getCsvArray() );
     }
 
 
@@ -198,22 +101,15 @@ public class EditorController implements Initializable {
         }
 
         joinId++;
-        System.out.println("+Join id: " + joinId);
     }
 
     public static void deleteJoinById(String id){
         joinList.removeIf(join -> join.getId().equals(id));
         joinId--;
-        System.out.println("-Join id: " + joinId);
-        System.out.println("List delete size: "+joinList.size());
     }
 
     public static void addJoinList(Join join){
         joinList.add(join);
-        System.out.println("List add size" + joinList.size());
-        for(Join join1 : joinList){
-            System.out.println("Table name: " + join1.getTableName());
-        }
     }
 
 }

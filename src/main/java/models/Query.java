@@ -7,7 +7,8 @@ public class Query {
     private String Id;
     private StringBuilder select;
     private StringBuilder from;
-    private StringBuilder join; // joins
+    private StringBuilder joinListString;
+
     private StringBuilder filter;
     private ArrayList<ArrayList<String>> csvArray;
     private StringBuilder csvArrayString;
@@ -17,7 +18,7 @@ public class Query {
     public Query(){
         select = new StringBuilder();
         from = new StringBuilder();
-        join = new StringBuilder(); // joins
+        joinListString = new StringBuilder(); // joins
         filter = new StringBuilder();
         csvArray = new ArrayList<>(); // that comes from csv
         csvArrayString = new StringBuilder();
@@ -41,13 +42,6 @@ public class Query {
         this.from = from;
     }
 
-    public StringBuilder getJoin() {
-        return join;
-    }
-
-    public void setJoin(StringBuilder join) {
-        this.join = join;
-    }
 
     public StringBuilder getFilter() {
         return filter;
@@ -55,14 +49,6 @@ public class Query {
 
     public void setFilter(StringBuilder filter) {
         this.filter = filter;
-    }
-
-    public ArrayList<ArrayList<String>> getCsvArray() {
-        return csvArray;
-    }
-
-    public void setCsvArray(ArrayList<ArrayList<String>> csvArray) {
-        this.csvArray = csvArray;
     }
 
     public StringBuilder getFooter() {
@@ -73,12 +59,30 @@ public class Query {
         this.footer = footer;
     }
 
+    //csv array, csv string
+    public ArrayList<ArrayList<String>> getCsvArray() {
+        return csvArray;
+    }
+
+    public void setCsvArray(ArrayList<ArrayList<String>> csvArray) {
+        this.csvArray = csvArray;
+    }
+
     public StringBuilder getCsvArrayString() {
         return csvArrayString;
     }
 
     public void setCsvArrayString(StringBuilder csvArrayString) {
         this.csvArrayString = csvArrayString;
+    }
+
+    //join array, join string
+    public StringBuilder getJoinListString() {
+        return joinListString;
+    }
+
+    public void setJoinListString(StringBuilder joinListString) {
+        this.joinListString = joinListString;
     }
 
     public boolean isWhere() {
@@ -100,8 +104,8 @@ public class Query {
     public StringBuilder display(){
         StringBuilder sb = new StringBuilder();
         sb.append(getSelect()).append(getFrom());
-        if(!getJoin().isEmpty()){
-            sb.append(getJoin());
+        if(!getJoinListString().isEmpty()){
+            sb.append(getJoinListString());
         }
         if(!getFilter().isEmpty()){
             sb.append(getFilter());

@@ -37,7 +37,9 @@ public class JoinController implements Initializable {
         this.join = new Join();
         this.joinTable.textProperty().addListener((observable, oldValue, newValue) -> {
             this.join.setTableName(newValue);
-            System.out.println("Join Table: " +newValue);
+        });
+        this.joinPredicate.textProperty().addListener((observable, oldValue, newValue) -> {
+            this.join.setOnJoin(newValue);
         });
         EditorController.addJoinList(join);
         this.join.setId(this.joinId);
@@ -51,7 +53,7 @@ public class JoinController implements Initializable {
         FlowPane parentFlow = (FlowPane)parentPane.getParent();
         parentFlow.getChildren().remove(parentPane);
         EditorController.deleteJoinById(this.join.getId());
-        System.out.println("deleted: " + this.join.getId());
+        //System.out.println("deleted: " + this.join.getId());
 
     }
 

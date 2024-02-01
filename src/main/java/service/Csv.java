@@ -10,15 +10,11 @@ import java.util.Locale;
 
 public class Csv {
 
-
-
-
     public static ArrayList<ArrayList<String>> CsvToString (String inputFile){
 
         ArrayList<ArrayList<String>> queryArray = new ArrayList<>();
 
         try (CSVReader reader = new CSVReader(new FileReader(inputFile))) {
-
 
             ArrayList<String> partQueryArray = new ArrayList<>();
 
@@ -32,17 +28,14 @@ public class Csv {
                     partQueryArray = new ArrayList<>();
                 }
 
-
                 scoutput.append("'");
                 scoutput.append(nextLine[0].toLowerCase(Locale.ROOT));
                 scoutput.append("' ");
                 partQueryArray.add(scoutput.toString());
                 scoutput = new StringBuilder();
 
-
                 i++;
             }
-
 
             queryArray.add(partQueryArray);
 

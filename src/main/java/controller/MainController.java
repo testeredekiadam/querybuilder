@@ -13,6 +13,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 
 import models.Query;
+import service.QueryComponents;
 
 import java.io.IOException;
 import java.net.URL;
@@ -39,19 +40,8 @@ public class MainController implements Initializable {
     @FXML
     public void displayQuery() {
 
-        StringBuilder stringBuilder = new StringBuilder();
-        if(query != null){
+        QueryComponents.displayComponent(this.query, queryList);
 
-            for (Query item : queryList) {
-                if(!queryList.get(0).equals(item)){
-                    stringBuilder.append("\nUNION\n\n");
-                }
-                stringBuilder.append(item.display());
-                item.setWhere(false);
-
-            }
-            this.query.setText(stringBuilder.toString());
-        }
     }
 
     public void onCopy(){
@@ -62,7 +52,7 @@ public class MainController implements Initializable {
             content.putString(copyQuery);
             Clipboard.getSystemClipboard().setContent(content);
         }
-        System.out.println("Copy Clicked");
+        //System.out.println("Copy Clicked");
     }
 
     public void display(){
@@ -81,15 +71,15 @@ public class MainController implements Initializable {
         Tab newTab = new Tab("Query Tab");
         newTab.setId(String.valueOf(tabId));
 
-        System.out.println("saved: " + tabId);
+        //System.out.println("saved: " + tabId);
 
         System.out.println(newTab.getId());
         newTab.setOnClosed((Event t) -> {
             removeByTabId(newTab.getId());
-            System.out.println(queryList.size());
-            System.out.println("deleted: " + tabId);
+            //System.out.println(queryList.size());
+            //System.out.println("deleted: " + tabId);
             tabId--;
-            System.out.println("New total: " + tabId);
+            //System.out.println("New total: " + tabId);
             }
         );
 
@@ -101,7 +91,7 @@ public class MainController implements Initializable {
 
             Parent content = loader.load();
             newTab.setContent(content);
-            System.out.println(newTab.getText());
+            //System.out.println(newTab.getText());
 
         }catch (IOException e) {
             System.out.println(e.getMessage());
