@@ -8,12 +8,12 @@
 
     <GridPane>
         <HBox spacing="20" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-padding: 20">
-            <TextField fx:id="filePath" editable="false" promptText="Choose a file" prefWidth="300"  />
+            <TextField fx:id="filePath" editable="false" promptText="Choose a file" prefWidth="300"/>
             <Button fx:id="openFileButton" text="Open File" onAction="#onOpenFileClicked"/>
         </HBox>
         <VBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-padding: 0 0 10 20">
-            <TextField fx:id="selectedColumns" promptText="Enter columns"/>
-            <TextField fx:id="table" promptText="Enter table"/>
+            <TextField fx:id="selectedColumns" promptText="Enter columns" prefWidth="300" maxWidth="300"/>
+            <TextField fx:id="table" promptText="Enter table" prefWidth="300" maxWidth="300"/>
             <FlowPane fx:id="joinPane" orientation="VERTICAL" minHeight="100"/>
             <Button fx:id="joinButton" text="Join" onAction="#addJoin"/>
             <HBox spacing="20">

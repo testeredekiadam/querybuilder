@@ -11,8 +11,10 @@
             prefHeight="20">
 
     <HBox spacing="20">
+        <ChoiceBox fx:id="joinChoiceBox" value="INNER" prefWidth="100"/>
         <TextField fx:id="joinTable" promptText="Enter table to join"/>
-        <TextField fx:id="joinPredicate" promptText="Enter join predicate"/>
+        <TextField fx:id="joinPredicateLeft" promptText="Enter left predicate"/>
+        <TextField fx:id="joinPredicateRight" promptText="Enter right predicate"/>
         <Button fx:id="discardButton" text="Discard" onAction="#discardJoin"/>
     </HBox>
 

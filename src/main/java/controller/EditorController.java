@@ -48,7 +48,7 @@ public class EditorController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.openFileButton.requestFocus();
         this.query = new Query();
-        joinList  = new ArrayList<>();
+        joinList = new ArrayList<>();
         filterChoiceBox.getItems().addAll(options);
 
         this.query.setId(this.tabId);

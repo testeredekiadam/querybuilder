@@ -125,7 +125,9 @@ public class QueryComponents {
                 stringBuilder.append("INNER JOIN ")
                         .append(item.getTableName())
                         .append("\nON ")
-                        .append(item.getOnJoin())
+                        .append(item.getPredicateLeft())
+                        .append(" = ")
+                        .append(item.getPredicateRight())
                         .append("\n");
             }
         }

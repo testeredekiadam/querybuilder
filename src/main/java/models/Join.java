@@ -3,12 +3,15 @@ package models;
 public class Join {
 
     private String Id;
+    private String joinType;
     private String tableName;
-    private String onJoin;
+    private String predicateLeft;
+    private String predicateRight;
 
     public Join(){
         this.tableName = "";
-        this.onJoin = "";
+        this.predicateLeft = "";
+        this.predicateRight = "";
     }
 
     public String getId() {
@@ -27,11 +30,19 @@ public class Join {
         this.tableName = tableName;
     }
 
-    public String getOnJoin() {
-        return onJoin;
+    public String getPredicateLeft() {
+        return predicateLeft;
     }
 
-    public void setOnJoin(String onJoin) {
-        this.onJoin = onJoin;
+    public void setPredicateLeft(String predicateLeft) {
+        this.predicateLeft = predicateLeft;
+    }
+
+    public String getPredicateRight() {
+        return predicateRight;
+    }
+
+    public void setPredicateRight(String predicateRight) {
+        this.predicateRight = predicateRight;
     }
 }
