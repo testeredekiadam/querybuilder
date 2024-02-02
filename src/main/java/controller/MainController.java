@@ -98,6 +98,8 @@ public class MainController implements Initializable {
         }
         tabPane.getTabs().add(newTab);
         tabId++;
+        this.tabPane.getSelectionModel().select(newTab);
+
     }
 
     private void removeByTabId(String tabId){
@@ -108,5 +110,6 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         onAddNewTab();
         this.tabPane.getTabs().get(0).setClosable(false);
+        this.tabPane.getSelectionModel().select(1);
     }
 }

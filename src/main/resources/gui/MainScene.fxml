@@ -3,16 +3,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.shape.Box?>
 <BorderPane xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml"
-          fx:controller="controller.MainController">
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.MainController"
+            stylesheets="@../styles/styles.css">
+
 
 
 
     <top>
         <MenuBar>
             <Menu text="File">
-                <MenuItem text="Add New Query" onAction="#onAddNewTab"/>
+                <MenuItem text="Search Query" onAction="#onAddNewTab"/>
                 <SeparatorMenuItem/>
             </Menu>
         </MenuBar>
@@ -25,12 +28,14 @@
         <VBox spacing="20">
                 <TabPane fx:id="tabPane" minHeight="200">
 
+                    <Tab closable="false" styleClass="transparent-tab">
+                        <graphic>
+                            <Button text="New Tab" onAction="#onAddNewTab" styleClass="borderless-button"/>
+                        </graphic>
+                    </Tab>
+
                 </TabPane>
 
-                <HBox spacing="20"  style="-fx-padding: 0 0 10 20">
-                    <Button fx:id="displayQueryButton" text="Display Query" onAction="#display"/>
-
-                </HBox>
             <TextArea fx:id="query" editable="false">
 
             </TextArea>
