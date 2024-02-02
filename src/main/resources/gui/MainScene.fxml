@@ -36,6 +36,11 @@
 
                 </TabPane>
 
+            <HBox spacing="20"  style="-fx-padding: 0 0 10 20">
+                <Button fx:id="displayQueryButton" text="Display Query" onAction="#display"/>
+
+            </HBox>
+
             <TextArea fx:id="query" editable="false">
 
             </TextArea>
