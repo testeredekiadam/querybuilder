@@ -2,15 +2,22 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 
 
-import service.QueryComponents;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import service.QueryServiceInterface;
+import service.SearchQueryServiceImpl;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,9 +26,13 @@ public class MainController implements Initializable {
     @FXML
     public MenuItem searchQuery, updateCompanyUser, deleteCompanyUser, insertDomain, deleteDomain, updateMailDomains, importUserFromCSV;
     @FXML
+    public Label chooseLabel;
+    @FXML
     private Button copyButton, displayQueryButton;
     @FXML
     private TextArea query;
+
+    QueryServiceInterface queryService;
 
     private String queryChoice;
 
@@ -29,7 +40,7 @@ public class MainController implements Initializable {
     @FXML
     public void displayQuery() {
 
-        QueryComponents.displayComponent(this.query, SearchQueryController.queryList);
+        queryService.displayComponent(this.query, SearchQueryController.queryList);
 
     }
 
@@ -41,7 +52,6 @@ public class MainController implements Initializable {
             content.putString(copyQuery);
             Clipboard.getSystemClipboard().setContent(content);
         }
-        //System.out.println("Copy Clicked");
     }
 
     public void display(){
@@ -49,27 +59,40 @@ public class MainController implements Initializable {
     }
 
 
-
-
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 
-    public void onChooseEditor(ActionEvent actionEvent) {
 
-        MenuItem item = (MenuItem) actionEvent.getTarget();
+    public void onSearchQueryEditor(ActionEvent actionEvent) throws NullPointerException{
+        queryService = new SearchQueryServiceImpl();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/SearchQuery.fxml"));
+        SearchQueryController controller = new SearchQueryController();
+        controller.setQueryService(queryService);
+        loader.setController(controller);
 
-        switch (item.getId()){
-            default -> System.out.println(item.getId());
+        try {
+
+            Parent content = loader.load();
+
+            AnchorPane root = (AnchorPane) content;
+
+            VBox mainCenter = (VBox) ((BorderPane) query.getScene().getRoot()).getCenter();
+
+
+
+
+
+            mainCenter.getChildren().add(0, content);
+
+        }catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-
 
     }
 
-    public void querySelect(){}
-
+    public void onUpdateCompanyUserEditor(ActionEvent actionEvent) {
+        queryService = null;
+    }
 }

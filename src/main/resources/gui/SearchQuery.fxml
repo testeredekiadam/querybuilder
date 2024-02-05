@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.SearchQueryController">
+            xmlns:fx="http://javafx.com/fxml">
 
     <TabPane fx:id="tabPane" minHeight="200"
              AnchorPane.topAnchor="0.0"

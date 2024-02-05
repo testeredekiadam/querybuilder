@@ -1,21 +1,22 @@
 package service;
 
-import controller.MainController;
 import controller.SearchQueryController;
 import javafx.scene.control.TextArea;
 import models.Join;
-import models.SelectQuery;
+import models.Query;
 
 import java.util.ArrayList;
 
-public class QueryComponents {
+public class SearchQueryServiceImpl implements QueryServiceInterface {
 
-    public static void displayComponent(TextArea query, ArrayList<SelectQuery> queryList){
+
+    @Override
+    public void displayComponent(TextArea query, ArrayList<Query> queryList) {
 
         StringBuilder stringBuilder = new StringBuilder();
         if(query != null){
 
-            for (SelectQuery item : queryList) {
+            for (Query item : queryList) {
                 if(!queryList.get(0).equals(item)){
                     stringBuilder.append("\nUNION\n\n");
                 }
@@ -24,9 +25,11 @@ public class QueryComponents {
             }
             query.setText(stringBuilder.toString());
         }
+
     }
 
-    public static void selectComponent(SelectQuery query, String columns){
+    @Override
+    public void selectComponent(Query query, String columns) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("SELECT ");
         if(!columns.isEmpty()) {
@@ -37,10 +40,10 @@ public class QueryComponents {
         }
         stringBuilder.append("\n");
         SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setSelect(stringBuilder);
-
     }
 
-    public static void fromComponent(SelectQuery query, String table){
+    @Override
+    public void fromComponent(Query query, String table) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("FROM ");
         if(!table.isEmpty()){
@@ -53,7 +56,8 @@ public class QueryComponents {
         SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setFrom(stringBuilder);
     }
 
-    public static void whereComponent(SelectQuery query, String choice, String column, String filter){
+    @Override
+    public void whereComponent(Query query, String choice, String column, String filter) {
         StringBuilder stringBuilder;
         if(column.isEmpty() || filter.isEmpty()){
             stringBuilder = new StringBuilder();
@@ -86,7 +90,8 @@ public class QueryComponents {
         SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setFilter(stringBuilder);
     }
 
-    public static void searchInCsv(SelectQuery query, String columnFilter, ArrayList<ArrayList<String>> queryArray){
+    @Override
+    public void searchInCsv(Query query, String columnFilter, ArrayList<ArrayList<String>> queryArray) {
         StringBuilder stringBuilder = new StringBuilder();
         final int[] i = {0};
 
@@ -119,7 +124,8 @@ public class QueryComponents {
         SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setCsvArrayString(stringBuilder);
     }
 
-    public static void joinComponent(SelectQuery query, ArrayList<Join> joinList){
+    @Override
+    public void joinComponent(Query query, ArrayList<Join> joinList) {
         StringBuilder stringBuilder = new StringBuilder();
         if(!joinList.isEmpty()){
             for(Join item : joinList){
@@ -135,6 +141,4 @@ public class QueryComponents {
 
         SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setJoinListString(stringBuilder);
     }
-
-
 }

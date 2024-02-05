@@ -7,7 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import models.SelectQuery;
+import models.Query;
+import service.QueryServiceInterface;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,7 +22,9 @@ public class SearchQueryController implements Initializable {
     public static int tabId=0;
 
 
-    public static final ArrayList<SelectQuery> queryList = new ArrayList<>();
+    public static final ArrayList<Query> queryList = new ArrayList<>();
+
+    QueryServiceInterface queryService;
 
 
     @Override
@@ -44,7 +47,7 @@ public class SearchQueryController implements Initializable {
         );
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/SearchQueryItem.fxml"));
-        EditorController editorController = new EditorController();
+        SearchQueryItemController editorController = new SearchQueryItemController();
         editorController.setTabId(String.valueOf(tabId));
         loader.setController(editorController);
         try {
@@ -65,11 +68,11 @@ public class SearchQueryController implements Initializable {
         queryList.removeIf(query -> query.getId().equals(tabId));
     }
 
-    public static void addQueryList(SelectQuery query){
+    public static void addQueryList(Query query){
         queryList.add(query);
     }
 
-    public static SelectQuery getQueryListElement(int index){
+    public static Query getQueryListElement(int index){
         return queryList.get(index);
     }
 
@@ -77,5 +80,11 @@ public class SearchQueryController implements Initializable {
         return String.valueOf(tabId);
     }
 
+    public QueryServiceInterface getQueryService() {
+        return queryService;
+    }
 
+    public void setQueryService(QueryServiceInterface queryService) {
+        this.queryService = queryService;
+    }
 }

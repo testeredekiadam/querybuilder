@@ -11,16 +11,17 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Join;
-import models.SelectQuery;
+import models.Query;
 import service.Csv;
-import service.QueryComponents;
+import service.QueryServiceInterface;
+import service.SearchQueryServiceImpl;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class EditorController implements Initializable {
+public class SearchQueryItemController implements Initializable {
     @FXML
     private Button openFileButton, updateButton, joinButton;
     @FXML
@@ -32,7 +33,7 @@ public class EditorController implements Initializable {
 
     private final String[] options = {"In", "Equal", "Greater than", "Less than", "Greater than or equal", "Less than or equal", "Not equal", "Between", "Like"};
     private String choice;
-    SelectQuery query;
+    Query query;
     private String tabId;
     FileChooser fileChooser;
 
@@ -40,14 +41,17 @@ public class EditorController implements Initializable {
 
     private static int joinId = 0;
 
+    QueryServiceInterface searchQueryService = new SearchQueryServiceImpl();
+
     public int getJoinId() {
         return joinId;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        searchQueryService = new SearchQueryServiceImpl();
         this.openFileButton.requestFocus();
-        this.query = new SelectQuery();
+        this.query = new Query();
         joinList = new ArrayList<>();
         filterChoiceBox.getItems().addAll(options);
 
@@ -71,11 +75,11 @@ public class EditorController implements Initializable {
 
     public void update(){
         getFilterChoice();
-        QueryComponents.selectComponent(this.query, selectedColumns.getText());
-        QueryComponents.fromComponent(this.query, table.getText());
-        QueryComponents.whereComponent(this.query, this.choice, attribute.getText(), filter.getText());
-        QueryComponents.searchInCsv(this.query, attribute.getText(), SearchQueryController.getQueryListElement(Integer.parseInt(this.query.getId())).getCsvArray());
-        QueryComponents.joinComponent(this.query, joinList);
+        searchQueryService.selectComponent(this.query, selectedColumns.getText());
+        searchQueryService.fromComponent(this.query, table.getText());
+        searchQueryService.whereComponent(this.query, this.choice, attribute.getText(), filter.getText());
+        searchQueryService.searchInCsv(this.query, attribute.getText(), SearchQueryController.getQueryListElement(Integer.parseInt(this.query.getId())).getCsvArray());
+        searchQueryService.joinComponent(this.query, joinList);
 
     }
 
