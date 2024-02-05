@@ -53,7 +53,7 @@ public class EditorController implements Initializable {
 
         this.query.setId(this.tabId);
         this.query.setWhere(false);
-        MainController.addQueryList(this.query);
+        SearchQueryController.addQueryList(this.query);
     }
 
     @FXML
@@ -65,7 +65,7 @@ public class EditorController implements Initializable {
 
         if(selectedFile != null){
             this.filePath.setText(selectedFile.getAbsolutePath());
-            MainController.getQueryListElement(Integer.parseInt(this.query.getId())).setCsvArray(Csv.CsvToString(selectedFile.getAbsolutePath()));
+            SearchQueryController.getQueryListElement(Integer.parseInt(this.query.getId())).setCsvArray(Csv.CsvToString(selectedFile.getAbsolutePath()));
         }
     }
 
@@ -74,7 +74,7 @@ public class EditorController implements Initializable {
         QueryComponents.selectComponent(this.query, selectedColumns.getText());
         QueryComponents.fromComponent(this.query, table.getText());
         QueryComponents.whereComponent(this.query, this.choice, attribute.getText(), filter.getText());
-        QueryComponents.searchInCsv(this.query, attribute.getText(), MainController.getQueryListElement(Integer.parseInt(this.query.getId())).getCsvArray());
+        QueryComponents.searchInCsv(this.query, attribute.getText(), SearchQueryController.getQueryListElement(Integer.parseInt(this.query.getId())).getCsvArray());
         QueryComponents.joinComponent(this.query, joinList);
 
     }

@@ -1,6 +1,7 @@
 package service;
 
 import controller.MainController;
+import controller.SearchQueryController;
 import javafx.scene.control.TextArea;
 import models.Join;
 import models.SelectQuery;
@@ -35,7 +36,7 @@ public class QueryComponents {
             stringBuilder.append("*");
         }
         stringBuilder.append("\n");
-        MainController.getQueryListElement(Integer.parseInt(query.getId())).setSelect(stringBuilder);
+        SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setSelect(stringBuilder);
 
     }
 
@@ -49,7 +50,7 @@ public class QueryComponents {
             stringBuilder.append(" 'enter table name' ");
         }
         stringBuilder.append("\n");
-        MainController.getQueryListElement(Integer.parseInt(query.getId())).setFrom(stringBuilder);
+        SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setFrom(stringBuilder);
     }
 
     public static void whereComponent(SelectQuery query, String choice, String column, String filter){
@@ -59,13 +60,13 @@ public class QueryComponents {
         }
         else{
             stringBuilder = new StringBuilder();
-            if(MainController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
+            if(SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
                 stringBuilder.append(" AND ");
             }
 
-            if(!MainController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
+            if(!SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
                 stringBuilder.append("WHERE ");
-                MainController.getQueryListElement(Integer.parseInt(query.getId())).setWhere(true);
+                SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setWhere(true);
             }
             stringBuilder.append(column);
 
@@ -82,20 +83,20 @@ public class QueryComponents {
             }
             stringBuilder.append(filter).append("\n");
         }
-        MainController.getQueryListElement(Integer.parseInt(query.getId())).setFilter(stringBuilder);
+        SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setFilter(stringBuilder);
     }
 
     public static void searchInCsv(SelectQuery query, String columnFilter, ArrayList<ArrayList<String>> queryArray){
         StringBuilder stringBuilder = new StringBuilder();
         final int[] i = {0};
 
-        if(MainController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
+        if(SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
             stringBuilder.append("AND ");
         }
 
-        if(!MainController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
+        if(!SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
             stringBuilder.append("WHERE ");
-            MainController.getQueryListElement(Integer.parseInt(query.getId())).setWhere(true);
+            SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setWhere(true);
         }
 
         stringBuilder
@@ -115,7 +116,7 @@ public class QueryComponents {
             i[0]++;
         });
 
-        MainController.getQueryListElement(Integer.parseInt(query.getId())).setCsvArrayString(stringBuilder);
+        SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setCsvArrayString(stringBuilder);
     }
 
     public static void joinComponent(SelectQuery query, ArrayList<Join> joinList){
@@ -132,7 +133,7 @@ public class QueryComponents {
             }
         }
 
-        MainController.getQueryListElement(Integer.parseInt(query.getId())).setJoinListString(stringBuilder);
+        SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setJoinListString(stringBuilder);
     }
 
 

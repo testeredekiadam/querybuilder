@@ -8,7 +8,18 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.SearchQueryController"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="controller.SearchQueryController">
+
+    <TabPane fx:id="tabPane" minHeight="200"
+             AnchorPane.topAnchor="0.0"
+             AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+        <Tab closable="false" styleClass="transparent-tab">
+            <graphic>
+                <Button text="New Tab" onAction="#onAddNewTab" styleClass="borderless-button"/>
+            </graphic>
+        </Tab>
+
+    </TabPane>
 
 </AnchorPane>

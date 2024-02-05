@@ -31,15 +31,9 @@
 
     <center>
         <VBox spacing="20">
-                <TabPane fx:id="tabPane" minHeight="200">
 
-                    <Tab closable="false" styleClass="transparent-tab">
-                        <graphic>
-                            <Button text="New Tab" onAction="#onAddNewTab" styleClass="borderless-button"/>
-                        </graphic>
-                    </Tab>
+            <fx:include source="SearchQuery.fxml" />
 
-                </TabPane>
 
             <HBox spacing="20"  style="-fx-padding: 0 0 10 20">
                 <Button fx:id="displayQueryButton" text="Display Query" onAction="#display"/>
