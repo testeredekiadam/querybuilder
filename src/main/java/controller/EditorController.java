@@ -11,7 +11,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Join;
-import models.Query;
+import models.SelectQuery;
 import service.Csv;
 import service.QueryComponents;
 
@@ -32,7 +32,7 @@ public class EditorController implements Initializable {
 
     private final String[] options = {"In", "Equal", "Greater than", "Less than", "Greater than or equal", "Less than or equal", "Not equal", "Between", "Like"};
     private String choice;
-    Query query;
+    SelectQuery query;
     private String tabId;
     FileChooser fileChooser;
 
@@ -47,7 +47,7 @@ public class EditorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.openFileButton.requestFocus();
-        this.query = new Query();
+        this.query = new SelectQuery();
         joinList = new ArrayList<>();
         filterChoiceBox.getItems().addAll(options);
 

@@ -1,18 +1,16 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 
-import models.Query;
+import models.SelectQuery;
 import service.QueryComponents;
 
 import java.io.IOException;
@@ -23,13 +21,16 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
 
     @FXML
+    public MenuItem searchQuery, updateCompanyUser, deleteCompanyUser, insertDomain, deleteDomain, updateMailDomains, importUserFromCSV;
+    @FXML
     private Button copyButton, displayQueryButton;
     @FXML
     private TextArea query;
     @FXML
     private TabPane tabPane;
+    private String queryChoice;
 
-    private static final ArrayList<Query> queryList = new ArrayList<>();
+    private static final ArrayList<SelectQuery> queryList = new ArrayList<>();
     public static int tabId=0;
 
     public static String getTabId() {
@@ -59,11 +60,11 @@ public class MainController implements Initializable {
         displayQuery();
     }
 
-    public static void addQueryList(Query query){
+    public static void addQueryList(SelectQuery query){
         queryList.add(query);
     }
 
-    public static Query getQueryListElement(int index){
+    public static SelectQuery getQueryListElement(int index){
         return queryList.get(index);
     }
 
@@ -71,19 +72,14 @@ public class MainController implements Initializable {
         Tab newTab = new Tab("Query Tab");
         newTab.setId(String.valueOf(tabId));
 
-        //System.out.println("saved: " + tabId);
-
         System.out.println(newTab.getId());
         newTab.setOnClosed((Event t) -> {
             removeByTabId(newTab.getId());
-            //System.out.println(queryList.size());
-            //System.out.println("deleted: " + tabId);
             tabId--;
-            //System.out.println("New total: " + tabId);
             }
         );
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/Editor.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/SearchQueryItem.fxml"));
         EditorController editorController = new EditorController();
         editorController.setTabId(String.valueOf(tabId));
         loader.setController(editorController);
@@ -91,7 +87,6 @@ public class MainController implements Initializable {
 
             Parent content = loader.load();
             newTab.setContent(content);
-            //System.out.println(newTab.getText());
 
         }catch (IOException e) {
             System.out.println(e.getMessage());
@@ -110,6 +105,21 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         onAddNewTab();
         this.tabPane.getTabs().get(0).setClosable(false);
+        this.tabPane.getTabs().get(1).setClosable(false);
         this.tabPane.getSelectionModel().select(1);
     }
+
+    public void onChooseEditor(ActionEvent actionEvent) {
+
+        MenuItem item = (MenuItem) actionEvent.getTarget();
+
+        switch (item.getId()){
+            default -> System.out.println(item.getId());
+        }
+
+
+    }
+
+    public void querySelect(){}
+
 }

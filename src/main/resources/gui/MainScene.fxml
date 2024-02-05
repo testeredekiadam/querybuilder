@@ -15,8 +15,13 @@
     <top>
         <MenuBar>
             <Menu text="File">
-                <MenuItem text="Search Query" onAction="#onAddNewTab"/>
-                <SeparatorMenuItem/>
+                <MenuItem fx:id="searchQuery" text="Search Query" onAction="#onChooseEditor"/>
+                <MenuItem fx:id="updateCompanyUser" text="Update Company/User" onAction="#onChooseEditor"/>
+                <MenuItem fx:id="deleteCompanyUser" text="Delete Company/User" onAction="#onChooseEditor"/>
+                <MenuItem fx:id="insertDomain" text="Insert Domain" onAction="#onChooseEditor"/>
+                <MenuItem fx:id="deleteDomain" text="Delete Domain" onAction="#onChooseEditor"/>
+                <MenuItem fx:id="updateMailDomains" text="Update Mail Domains" onAction="#onChooseEditor"/>
+                <MenuItem fx:id="importUserFromCSV" text="Import User From CSV" onAction="#onChooseEditor"/>
             </Menu>
         </MenuBar>
 

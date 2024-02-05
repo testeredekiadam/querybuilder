@@ -2,7 +2,7 @@ package models;
 
 import java.util.ArrayList;
 
-public class Query {
+public class SelectQuery {
 
     private String Id;
     private StringBuilder select;
@@ -15,7 +15,7 @@ public class Query {
     private StringBuilder footer;
     private boolean where;
 
-    public Query(){
+    public SelectQuery(){
         select = new StringBuilder();
         from = new StringBuilder();
         joinListString = new StringBuilder(); // joins
