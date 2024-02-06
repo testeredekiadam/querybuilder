@@ -92,5 +92,20 @@ public class MainController implements Initializable {
 
     public void onUpdateCompanyUserEditor(ActionEvent actionEvent) {
         queryService = null;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/UpdateCompanyUser.fxml"));
+
+        try {
+
+            Parent content = loader.load();
+
+            AnchorPane root = (AnchorPane) content;
+
+            editorPane.getChildren().clear();
+
+            editorPane.getChildren().add(0, content);
+
+        }catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
