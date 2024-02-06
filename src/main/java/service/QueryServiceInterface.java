@@ -9,7 +9,8 @@ import java.util.ArrayList;
 
 public interface QueryServiceInterface {
 
-    void displayComponent(TextArea query, ArrayList<Query> queryList);
+    void displayComponent(TextArea queryArea, ArrayList<Query> queryList);
+    void displayComponent(TextArea queryArea, Query query);
     void selectComponent(Query query, String columns);
     void fromComponent(Query query, String table);
     void whereComponent(Query query, String choice, String column, String filter);

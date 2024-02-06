@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.UpdateCompanyUserController">
+            xmlns:fx="http://javafx.com/fxml">
 
     <GridPane>
         <HBox spacing="20" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-padding: 20">
@@ -17,7 +16,7 @@
         </HBox>
         <VBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-padding: 0 0 10 20">
             <TextField fx:id="table" promptText="Enter table" prefWidth="300" maxWidth="300"/>
-            <TextField fx:id="modifiedBy" promptText="Enter table" prefWidth="300" maxWidth="300"/>
+            <TextField fx:id="modifiedBy" promptText="Modified by" prefWidth="300" maxWidth="300"/>
             <TextField fx:id="comment4admin" promptText="Enter JIRA Ticket" prefWidth="300" maxWidth="300"/>
             <TextField fx:id="updateItem" promptText="Enter column name to update" prefWidth="300" maxWidth="300"/>
             <TextField fx:id="updatePredicate" promptText="Enter update predicate" prefWidth="300" maxWidth="300"/>

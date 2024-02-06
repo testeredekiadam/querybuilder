@@ -11,11 +11,10 @@ import javafx.scene.input.ClipboardContent;
 
 
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import service.QueryServiceInterface;
 import service.SearchQueryServiceImpl;
+import service.UpdateQueryServiceImpl;
 
 
 import java.io.IOException;
@@ -41,8 +40,12 @@ public class MainController implements Initializable {
 
     @FXML
     public void displayQuery() {
+        switch (getQueryChoice()){
+            case "SearchQuery" -> queryService.displayComponent(this.query, SearchQueryController.queryList);
+            case "UpdateQuery" -> queryService.displayComponent(this.query, UpdateCompanyUserController.query);
+        }
 
-        queryService.displayComponent(this.query, SearchQueryController.queryList);
+
 
     }
 
@@ -68,6 +71,7 @@ public class MainController implements Initializable {
 
 
     public void onSearchQueryEditor(ActionEvent actionEvent) throws NullPointerException{
+        setQueryChoice("SearchQuery");
         queryService = new SearchQueryServiceImpl();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/SearchQuery.fxml"));
         SearchQueryController controller = new SearchQueryController();
@@ -91,8 +95,12 @@ public class MainController implements Initializable {
     }
 
     public void onUpdateCompanyUserEditor(ActionEvent actionEvent) {
-        queryService = null;
+        setQueryChoice("UpdateQuery");
+        queryService = new UpdateQueryServiceImpl();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/UpdateCompanyUser.fxml"));
+        UpdateCompanyUserController controller = new UpdateCompanyUserController();
+        controller.setUpdateQueryService(queryService);
+        loader.setController(controller);
 
         try {
 
@@ -107,5 +115,13 @@ public class MainController implements Initializable {
         }catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public String getQueryChoice() {
+        return queryChoice;
+    }
+
+    public void setQueryChoice(String queryChoice) {
+        this.queryChoice = queryChoice;
     }
 }

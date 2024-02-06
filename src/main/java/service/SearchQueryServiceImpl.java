@@ -29,6 +29,11 @@ public class SearchQueryServiceImpl implements QueryServiceInterface {
     }
 
     @Override
+    public void displayComponent(TextArea query, Query query2) {
+
+    }
+
+    @Override
     public void selectComponent(Query query, String columns) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("SELECT ");
