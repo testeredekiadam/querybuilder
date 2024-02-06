@@ -12,6 +12,7 @@ import javafx.scene.input.ClipboardContent;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import service.QueryServiceInterface;
 import service.SearchQueryServiceImpl;
@@ -27,6 +28,7 @@ public class MainController implements Initializable {
     public MenuItem searchQuery, updateCompanyUser, deleteCompanyUser, insertDomain, deleteDomain, updateMailDomains, importUserFromCSV;
     @FXML
     public Label chooseLabel;
+    public VBox editorPane;
     @FXML
     private Button copyButton, displayQueryButton;
     @FXML
@@ -78,13 +80,9 @@ public class MainController implements Initializable {
 
             AnchorPane root = (AnchorPane) content;
 
-            VBox mainCenter = (VBox) ((BorderPane) query.getScene().getRoot()).getCenter();
+            editorPane.getChildren().clear();
 
-
-
-
-
-            mainCenter.getChildren().add(0, content);
+            editorPane.getChildren().add(0, content);
 
         }catch (IOException e) {
             System.out.println(e.getMessage());

@@ -29,6 +29,7 @@ public class SearchQueryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.reset();
         onAddNewTab();
         this.tabPane.getTabs().get(0).setClosable(false);
         this.tabPane.getTabs().get(1).setClosable(false);
@@ -62,6 +63,11 @@ public class SearchQueryController implements Initializable {
         tabId++;
         this.tabPane.getSelectionModel().select(newTab);
 
+    }
+
+    public void reset(){
+        tabId = 0;
+        queryList.clear();
     }
 
     private void removeByTabId(String tabId){
