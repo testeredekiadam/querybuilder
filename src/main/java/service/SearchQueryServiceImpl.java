@@ -99,6 +99,7 @@ public class SearchQueryServiceImpl implements QueryServiceInterface {
     public void searchInCsv(Query query, String columnFilter, ArrayList<ArrayList<String>> queryArray) {
         StringBuilder stringBuilder = new StringBuilder();
         final int[] i = {0};
+        System.out.println(SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).isWhere());
 
         if(SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
             stringBuilder.append("AND ");

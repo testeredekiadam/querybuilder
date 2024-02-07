@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -11,6 +8,7 @@
 
     <GridPane>
         <HBox spacing="20" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-padding: 20">
+            <TextField fx:id="csvFilterAttribute" promptText="Choose a file" prefWidth="300"/>
             <TextField fx:id="filePath" editable="false" promptText="Choose a file" prefWidth="300"/>
             <Button fx:id="openFileButton" text="Open File" onAction="#onOpenFileClicked"/>
         </HBox>
@@ -32,9 +30,7 @@
         </VBox>
         <HBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-padding: 0 0 10 20">
             <Button fx:id="updateButton" text="Update Filters" onAction="#update"/>
-
         </HBox>
-
 
     </GridPane>
 

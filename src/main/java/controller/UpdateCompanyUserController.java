@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 
 public class UpdateCompanyUserController implements Initializable {
     public Button openFileButton, updateButton;
-    public TextField filePath, table, modifiedBy, comment4admin, updateItem, updatePredicate, attribute, filter;
+    public TextField filePath, table, modifiedBy, comment4admin, updateItem, updatePredicate, attribute, filter, csvFilterAttribute;
     QueryServiceInterface updateQueryService = new UpdateQueryServiceImpl();
     FileChooser fileChooser;
     public static Query query;
@@ -49,12 +49,13 @@ public class UpdateCompanyUserController implements Initializable {
         }
     }
 
-    public void update(ActionEvent actionEvent) {
+    public void update() {
         setChoice();
         updateQueryService.selectComponent(query, table.getText());
         updateQueryService.fromComponent(query, updateQueryService.standardInfoComponents(modifiedBy.getText(), comment4admin.getText()));
         updateQueryService.updateComponent(query, updateItem.getText(), updatePredicate.getText());
         updateQueryService.whereComponent(query, choice, attribute.getText(), filter.getText());
+        updateQueryService.searchInCsv(query, csvFilterAttribute.getText(), query.getCsvArray());
 
     }
 

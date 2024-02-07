@@ -14,6 +14,7 @@ public class UpdateQueryServiceImpl implements QueryServiceInterface{
 
     @Override
     public void displayComponent(TextArea queryArea, Query query) {
+        query.setWhere(false);
         queryArea.setText(String.valueOf(query.display()));
 
     }
@@ -83,7 +84,37 @@ public class UpdateQueryServiceImpl implements QueryServiceInterface{
 
     @Override
     public void searchInCsv(Query query, String columnFilter, ArrayList<ArrayList<String>> queryArray) {
+        StringBuilder stringBuilder = new StringBuilder();
+        final int[] i = {0};
+        System.out.println(UpdateCompanyUserController.query.isWhere());
 
+        if(UpdateCompanyUserController.query.isWhere()){
+            stringBuilder.append("AND ");
+        }
+
+        if(!UpdateCompanyUserController.query.isWhere()){
+            stringBuilder.append("WHERE ");
+            UpdateCompanyUserController.query.setWhere(true);
+        }
+
+        stringBuilder
+                .append(columnFilter);
+
+        queryArray.forEach(arrayItem -> {
+            if(i[0] > 0){
+                stringBuilder.append("AND ")
+                        .append(columnFilter);
+            }
+            stringBuilder.append(" IN ")
+                    .append('(')
+                    .append(arrayItem.toString().trim(), 1, arrayItem.toString().trim().length() -1)
+                    .append(")")
+                    .append("\n");
+
+            i[0]++;
+        });
+
+        UpdateCompanyUserController.query.setCsvArrayString(stringBuilder);
     }
 
     @Override
