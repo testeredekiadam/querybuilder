@@ -20,6 +20,12 @@
             <TextField fx:id="comment4admin" promptText="Enter JIRA Ticket" prefWidth="300" maxWidth="300"/>
             <TextField fx:id="updateItem" promptText="Enter column name to update" prefWidth="300" maxWidth="300"/>
             <TextField fx:id="updatePredicate" promptText="Enter update predicate" prefWidth="300" maxWidth="300"/>
+            <HBox>
+                <TextField fx:id="attribute" promptText="Enter update predicate" prefWidth="300" maxWidth="300"/>
+                <ChoiceBox fx:id="filterChoiceBox" value="In" prefWidth="150"/>
+                <TextField fx:id="filter" promptText="Enter update predicate" prefWidth="300" maxWidth="300"/>
+            </HBox>
+
 
         </VBox>
         <HBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-padding: 0 0 10 20">

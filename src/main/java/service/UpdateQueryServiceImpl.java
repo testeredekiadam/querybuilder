@@ -13,16 +13,17 @@ public class UpdateQueryServiceImpl implements QueryServiceInterface{
     public void displayComponent(TextArea query, ArrayList<Query> queryList) {}
 
     @Override
-    public void displayComponent(TextArea query, Query query2) {
+    public void displayComponent(TextArea queryArea, Query query) {
+        queryArea.setText(String.valueOf(query.display()));
 
     }
 
     @Override
-    public void selectComponent(Query query, String columns) {
+    public void selectComponent(Query query, String table) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("UPDATE ");
-        if(!columns.isEmpty()) {
-            stringBuilder.append(columns);
+        if(!table.isEmpty()) {
+            stringBuilder.append(table);
         }
         else {
             stringBuilder.append("--ENTER TABLE NAME--");
@@ -33,6 +34,16 @@ public class UpdateQueryServiceImpl implements QueryServiceInterface{
 
     @Override
     public void fromComponent(Query query, String table) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("SET ");
+        if(!table.isEmpty()) {
+            stringBuilder.append(table);
+        }
+        else {
+            stringBuilder.append("--ENTER TABLE NAME--");
+        }
+        stringBuilder.append("\n");
+        UpdateCompanyUserController.query.setSelect(stringBuilder);
 
     }
 
@@ -47,7 +58,5 @@ public class UpdateQueryServiceImpl implements QueryServiceInterface{
     }
 
     @Override
-    public void joinComponent(Query query, ArrayList<Join> joinList) {
-
-    }
+    public void joinComponent(Query query, ArrayList<Join> joinList) {}
 }
