@@ -40,14 +40,14 @@ public class UpdateCompanyUserController implements Initializable {
 
         if(selectedFile != null){
             this.filePath.setText(selectedFile.getAbsolutePath());
-//            SearchQueryController.getQueryListElement(Integer.parseInt(this.query.getId())).setCsvArray(Csv.CsvToString(selectedFile.getAbsolutePath()));
             query.setCsvArray(Csv.CsvToString((selectedFile.getAbsolutePath())));
         }
     }
 
     public void update(ActionEvent actionEvent) {
-        System.out.println(query.getCsvArray());
         updateQueryService.selectComponent(query, table.getText());
+        updateQueryService.fromComponent(query, updateQueryService.standardInfoComponents(modifiedBy.getText(), comment4admin.getText()));
+        updateQueryService.updateComponent(query, updateItem.getText(), updatePredicate.getText());
 
     }
 

@@ -146,4 +146,16 @@ public class SearchQueryServiceImpl implements QueryServiceInterface {
 
         SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setJoinListString(stringBuilder);
     }
+
+    @Override
+    public String standardInfoComponents(String s1, String s2) {
+        return null;
+    }
+
+    @Override
+    public void updateComponent(Query query, String column2update, String updated) {
+
+    }
+
+
 }

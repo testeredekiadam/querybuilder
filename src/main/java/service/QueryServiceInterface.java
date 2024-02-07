@@ -16,5 +16,7 @@ public interface QueryServiceInterface {
     void whereComponent(Query query, String choice, String column, String filter);
     void searchInCsv(Query query, String columnFilter, ArrayList<ArrayList<String>> queryArray);
     void joinComponent(Query query, ArrayList<Join> joinList);
+    String standardInfoComponents(String s1, String s2);
+    void updateComponent(Query query, String column2update, String updated);
 
 }

@@ -8,7 +8,7 @@ public class Query {
     private StringBuilder select;
     private StringBuilder from;
     private StringBuilder joinListString;
-
+    private StringBuilder update;
     private StringBuilder filter;
     private ArrayList<ArrayList<String>> csvArray;
     private StringBuilder csvArrayString;
@@ -24,6 +24,7 @@ public class Query {
         csvArrayString = new StringBuilder();
         footer = new StringBuilder();
         where = false;
+        update = new StringBuilder();
     }
 
     public StringBuilder getSelect() {
@@ -101,9 +102,20 @@ public class Query {
         Id = id;
     }
 
+    public StringBuilder getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(StringBuilder update) {
+        this.update = update;
+    }
+
     public StringBuilder display(){
         StringBuilder sb = new StringBuilder();
         sb.append(getSelect()).append(getFrom());
+        if(!getUpdate().isEmpty()){
+            sb.append(getUpdate());
+        }
         if(!getJoinListString().isEmpty()){
             sb.append(getJoinListString());
         }

@@ -43,13 +43,42 @@ public class UpdateQueryServiceImpl implements QueryServiceInterface{
             stringBuilder.append("--ENTER TABLE NAME--");
         }
         stringBuilder.append("\n");
-        UpdateCompanyUserController.query.setSelect(stringBuilder);
+        UpdateCompanyUserController.query.setFrom(stringBuilder);
 
     }
 
     @Override
     public void whereComponent(Query query, String choice, String column, String filter) {
+        StringBuilder stringBuilder;
+        if(column.isEmpty() || filter.isEmpty()){
+            stringBuilder = new StringBuilder();
+        }
+        else{
+            stringBuilder = new StringBuilder();
+            if(UpdateCompanyUserController.query.isWhere()){
+                stringBuilder.append(" AND ");
+            }
 
+            if(!UpdateCompanyUserController.query.isWhere()){
+                stringBuilder.append("WHERE ");
+                UpdateCompanyUserController.query.setWhere(true);
+            }
+            stringBuilder.append(column);
+
+            switch (choice) {
+                case "Equal" -> stringBuilder.append(" = ");
+                case "Greater than" -> stringBuilder.append(" > ");
+                case "Less than" -> stringBuilder.append(" < ");
+                case "Greater than or equal" -> stringBuilder.append(" >= ");
+                case "Less than or equal" -> stringBuilder.append(" <= ");
+                case "Not equal" -> stringBuilder.append(" <> ");
+                case "Between" -> stringBuilder.append(" BETWEEN ");
+                case "Like" -> stringBuilder.append(" LIKE ");
+                default -> stringBuilder.append(" IN ");
+            }
+            stringBuilder.append(filter).append("\n");
+        }
+        UpdateCompanyUserController.query.setFilter(stringBuilder);
     }
 
     @Override
@@ -59,4 +88,31 @@ public class UpdateQueryServiceImpl implements QueryServiceInterface{
 
     @Override
     public void joinComponent(Query query, ArrayList<Join> joinList) {}
+
+    public String standardInfoComponents(String modifiedBy, String jiraTicket){
+        return "modifiedby = '" +
+                modifiedBy +
+                "',\n" +
+                "lastmodified = sysdate,\n" +
+                "comment4admin = '" +
+                jiraTicket +
+                "'\n";
+    }
+
+    @Override
+    public void updateComponent(Query query, String column2update, String updated) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if(!column2update.isEmpty() && !updated.isEmpty()) {
+            stringBuilder.append(column2update)
+                    .append(" = ")
+                    .append(updated);
+        }
+        else {
+            stringBuilder.append("--ENTER UPDATE--");
+        }
+        stringBuilder.append("\n");
+        UpdateCompanyUserController.query.setUpdate(stringBuilder);
+    }
+
+
 }

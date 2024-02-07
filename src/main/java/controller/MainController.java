@@ -45,8 +45,6 @@ public class MainController implements Initializable {
             case "UpdateQuery" -> queryService.displayComponent(this.query, UpdateCompanyUserController.query);
         }
 
-
-
     }
 
     public void onCopy(){
