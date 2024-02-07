@@ -53,7 +53,7 @@ public class SearchQueryItemController implements Initializable {
         this.openFileButton.requestFocus();
         this.query = new Query();
         joinList = new ArrayList<>();
-        filterChoiceBox.getItems().addAll(options);
+        this.filterChoiceBox.getItems().addAll(this.options);
 
         this.query.setId(this.tabId);
         this.query.setWhere(false);
@@ -74,7 +74,7 @@ public class SearchQueryItemController implements Initializable {
     }
 
     public void update(){
-        getFilterChoice();
+        setFilterChoice();
         searchQueryService.selectComponent(this.query, selectedColumns.getText());
         searchQueryService.fromComponent(this.query, table.getText());
         searchQueryService.whereComponent(this.query, this.choice, attribute.getText(), filter.getText());
@@ -88,7 +88,7 @@ public class SearchQueryItemController implements Initializable {
         this.tabId = tabId;
     }
 
-    public void getFilterChoice(){
+    public void setFilterChoice(){
         this.choice = filterChoiceBox.getValue();
     }
 
