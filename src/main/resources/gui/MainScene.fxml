@@ -17,7 +17,7 @@
             <Menu text="File">
                 <MenuItem fx:id="searchQuery" text="Search Query" onAction="#onSearchQueryEditor"/>
                 <MenuItem fx:id="updateCompanyUser" text="Update Company/User" onAction="#onUpdateCompanyUserEditor"/>
-                <MenuItem fx:id="deleteCompanyUser" text="Delete Company/User" onAction="#onSearchQueryEditor"/>
+                <MenuItem fx:id="deleteCompanyUser" text="Delete Company/User" onAction="#onDeleteCompanyUserEditor"/>
                 <MenuItem fx:id="insertDomain" text="Insert Domain" onAction="#onSearchQueryEditor"/>
                 <MenuItem fx:id="deleteDomain" text="Delete Domain" onAction="#onSearchQueryEditor"/>
                 <MenuItem fx:id="updateMailDomains" text="Update Mail Domains" onAction="#onSearchQueryEditor"/>

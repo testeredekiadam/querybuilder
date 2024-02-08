@@ -14,7 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import service.QueryServiceInterface;
 import service.SearchQueryServiceImpl;
-import service.UpdateQueryServiceImpl;
+import service.UpdateCompanyUserQueryServiceImpl;
 
 
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class MainController implements Initializable {
     public void displayQuery() {
         switch (getQueryChoice()){
             case "SearchQuery" -> queryService.displayComponent(this.query, SearchQueryController.queryList);
-            case "UpdateQuery" -> queryService.displayComponent(this.query, UpdateCompanyUserController.query);
+            case "UpdateCompanyUserQuery", "DeleteCompanyUserQuery" -> queryService.displayComponent(this.query, UpdateCompanyUserController.query);
         }
 
     }
@@ -66,6 +66,7 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+
 
 
     public void onSearchQueryEditor(ActionEvent actionEvent) throws NullPointerException{
@@ -93,11 +94,12 @@ public class MainController implements Initializable {
     }
 
     public void onUpdateCompanyUserEditor(ActionEvent actionEvent) {
-        setQueryChoice("UpdateQuery");
-        queryService = new UpdateQueryServiceImpl();
+        setQueryChoice("UpdateCompanyUserQuery");
+        queryService = new UpdateCompanyUserQueryServiceImpl();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/UpdateCompanyUser.fxml"));
         UpdateCompanyUserController controller = new UpdateCompanyUserController();
-        controller.setUpdateQueryService(queryService);
+        controller.setQueryType("update");
+        controller.setQueryService(queryService);
         loader.setController(controller);
 
         try {
@@ -114,6 +116,32 @@ public class MainController implements Initializable {
             System.out.println(e.getMessage());
         }
     }
+
+    public void onDeleteCompanyUserEditor(ActionEvent actionEvent) {
+        setQueryChoice("DeleteCompanyUserQuery");
+        queryService = new UpdateCompanyUserQueryServiceImpl();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/DeleteCompanyUser.fxml"));
+        UpdateCompanyUserController controller = new UpdateCompanyUserController();
+        controller.setQueryType("delete");
+        controller.setQueryService(queryService);
+        loader.setController(controller);
+
+        try {
+
+            Parent content = loader.load();
+
+            AnchorPane root = (AnchorPane) content;
+
+            editorPane.getChildren().clear();
+
+            editorPane.getChildren().add(0, content);
+
+        }catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
 
     public String getQueryChoice() {
         return queryChoice;

@@ -149,7 +149,7 @@ public class SearchQueryServiceImpl implements QueryServiceInterface {
     }
 
     @Override
-    public String standardInfoComponents(String s1, String s2) {
+    public String standardInfoComponents(String type, String s1, String s2) {
         return null;
     }
 

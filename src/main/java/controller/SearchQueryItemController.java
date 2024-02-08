@@ -41,7 +41,7 @@ public class SearchQueryItemController implements Initializable {
 
     private static int joinId = 0;
 
-    QueryServiceInterface searchQueryService = new SearchQueryServiceImpl();
+    QueryServiceInterface queryService = new SearchQueryServiceImpl();
 
     public int getJoinId() {
         return joinId;
@@ -49,7 +49,7 @@ public class SearchQueryItemController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        searchQueryService = new SearchQueryServiceImpl();
+        queryService = new SearchQueryServiceImpl();
         this.openFileButton.requestFocus();
         this.query = new Query();
         joinList = new ArrayList<>();
@@ -75,11 +75,11 @@ public class SearchQueryItemController implements Initializable {
 
     public void update(){
         setFilterChoice();
-        searchQueryService.selectComponent(this.query, selectedColumns.getText());
-        searchQueryService.fromComponent(this.query, table.getText());
-        searchQueryService.whereComponent(this.query, this.choice, attribute.getText(), filter.getText());
-        searchQueryService.searchInCsv(this.query, attribute.getText(), SearchQueryController.getQueryListElement(Integer.parseInt(this.query.getId())).getCsvArray());
-        searchQueryService.joinComponent(this.query, joinList);
+        queryService.selectComponent(this.query, selectedColumns.getText());
+        queryService.fromComponent(this.query, table.getText());
+        queryService.whereComponent(this.query, this.choice, attribute.getText(), filter.getText());
+        queryService.searchInCsv(this.query, attribute.getText(), SearchQueryController.getQueryListElement(Integer.parseInt(this.query.getId())).getCsvArray());
+        queryService.joinComponent(this.query, joinList);
 
     }
 
@@ -115,6 +115,10 @@ public class SearchQueryItemController implements Initializable {
 
     public static void addJoinList(Join join){
         joinList.add(join);
+    }
+
+    public void setQueryService(QueryServiceInterface queryService) {
+        this.queryService = queryService;
     }
 
 }

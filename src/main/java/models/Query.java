@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Query {
 
     private String Id;
+    private String queryType;
     private StringBuilder select;
     private StringBuilder from;
     private StringBuilder joinListString;
@@ -108,6 +109,14 @@ public class Query {
 
     public void setUpdate(StringBuilder update) {
         this.update = update;
+    }
+
+    public String getQueryType() {
+        return queryType;
+    }
+
+    public void setQueryType(String queryType) {
+        this.queryType = queryType;
     }
 
     public StringBuilder display(){
