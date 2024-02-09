@@ -67,8 +67,6 @@ public class MainController implements Initializable {
 
     }
 
-
-
     public void onSearchQueryEditor(ActionEvent actionEvent) throws NullPointerException{
         setQueryChoice("SearchQuery");
         queryService = new SearchQueryServiceImpl();
@@ -122,7 +120,7 @@ public class MainController implements Initializable {
         queryService = new UpdateCompanyUserQueryServiceImpl();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/DeleteCompanyUser.fxml"));
         UpdateCompanyUserController controller = new UpdateCompanyUserController();
-        controller.setQueryType("delete");
+        controller.setQueryType("deleteCompany");
         controller.setQueryService(queryService);
         loader.setController(controller);
 
@@ -140,8 +138,6 @@ public class MainController implements Initializable {
             System.out.println(e.getMessage());
         }
     }
-
-
 
     public String getQueryChoice() {
         return queryChoice;

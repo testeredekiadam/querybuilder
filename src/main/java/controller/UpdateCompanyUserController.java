@@ -1,11 +1,11 @@
 package controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Query;
@@ -22,13 +22,18 @@ public class UpdateCompanyUserController implements Initializable {
     public TextField filePath, table, modifiedBy, comment4admin, updateItem, updatePredicate, attribute, filter, csvFilterAttribute;
     QueryServiceInterface updateQueryService;
     FileChooser fileChooser;
-
     public static Query query;
     private final String[] options = {"In", "Equal", "Greater than", "Less than", "Greater than or equal", "Less than or equal", "Not equal", "Between", "Like"};
     @FXML
     private ChoiceBox<String> filterChoiceBox;
     private String choice;
     private String queryType;
+    @FXML
+    public RadioButton radioDeleteUser, radioDeleteCompany;
+    @FXML
+    public ToggleGroup toggleUserCompany;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -38,6 +43,23 @@ public class UpdateCompanyUserController implements Initializable {
         this.openFileButton.requestFocus();
         query.setWhere(false);
         filterChoiceBox.getItems().addAll(this.options);
+
+
+        if(!this.queryType.equals("update")) {
+            this.toggleUserCompany.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+                @Override
+                public void changed(ObservableValue<? extends Toggle> observableValue, Toggle toggle, Toggle t1) {
+                    System.out.println(t1);
+                    if (t1.equals(radioDeleteCompany)) {
+                        queryType = "deleteCompany";
+                        query.setQueryType(queryType);
+                    } else {
+                        queryType = "deleteUser";
+                        query.setQueryType(queryType);
+                    }
+                }
+            });
+        }
 
     }
 
@@ -56,10 +78,14 @@ public class UpdateCompanyUserController implements Initializable {
         setChoice();
         updateQueryService.selectComponent(query, table.getText());
 
-        if (this.queryType.equals("delete")) {
-            updateQueryService.fromComponent(query, updateQueryService.standardInfoComponents("delete", modifiedBy.getText(), comment4admin.getText()));
+        if (this.queryType.equals("deleteUser")) {
+            updateQueryService.fromComponent(query, updateQueryService.standardInfoComponents("deleteUser", modifiedBy.getText(), comment4admin.getText()));
             updateQueryService.updateComponent(query, "", "");
-        } else {
+        } else if (this.queryType.equals("deleteCompany")) {
+            updateQueryService.fromComponent(query, updateQueryService.standardInfoComponents("deleteCompany", modifiedBy.getText(), comment4admin.getText()));
+            updateQueryService.updateComponent(query, "", "");
+        }
+        else {
             updateQueryService.fromComponent(query, updateQueryService.standardInfoComponents("update", modifiedBy.getText(), comment4admin.getText()));
             updateQueryService.updateComponent(query, updateItem.getText(), updatePredicate.getText());
         }

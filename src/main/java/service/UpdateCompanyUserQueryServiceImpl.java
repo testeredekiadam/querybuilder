@@ -122,19 +122,20 @@ public class UpdateCompanyUserQueryServiceImpl implements QueryServiceInterface{
     @Override
     public String standardInfoComponents(String type, String modifiedBy, String jiraTicket){
         String deletedInfo = "";
-        if(type.equals("delete")) {
+        if(type.equals("deleteUser")) {
             deletedInfo = "hasnewsletter = 0, \n" +
                     "deleted = 1, \n" +
                     "username = CONCAT(username, CONCAT('_deleted', round((sysdate - to_date('01-JAN-1970', 'DD-MM-YYYY')) * 86400))),\n" +
                     "email = CONCAT(email, CONCAT('_deleted', round((sysdate - to_date('01-JAN-1970', 'DD-MM-YYYY')) * 86400))), \n";
         }
-        return deletedInfo + "modifiedby = '" +
-                modifiedBy +
-                "',\n" +
+        else if (type.equals("deleteCompany")){
+            deletedInfo = "deleted = 1, \n";
+
+        }
+        return deletedInfo +
+                "modifiedby = '" + modifiedBy + "',\n" +
                 "lastmodified = sysdate,\n" +
-                "comment4admin = '" +
-                jiraTicket +
-                "'\n";
+                "comment4admin = '" + jiraTicket + "'\n";
 
 
     }
@@ -142,7 +143,7 @@ public class UpdateCompanyUserQueryServiceImpl implements QueryServiceInterface{
     @Override
     public void updateComponent(Query query, String column2update, String updated) {
         StringBuilder stringBuilder = new StringBuilder();
-        if(!query.getQueryType().equals("delete")){
+        if(query.getQueryType().equals("update")){
             if(!column2update.isEmpty() && !updated.isEmpty()) {
                 stringBuilder.append(column2update)
                         .append(" = ")
