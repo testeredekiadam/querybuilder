@@ -12,6 +12,7 @@ import javafx.scene.input.ClipboardContent;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import service.InsertDeleteService;
 import service.QueryServiceInterface;
 import service.SearchQueryServiceImpl;
 import service.UpdateCompanyUserQueryServiceImpl;
@@ -43,6 +44,7 @@ public class MainController implements Initializable {
         switch (getQueryChoice()){
             case "SearchQuery" -> queryService.displayComponent(this.query, SearchQueryController.queryList);
             case "UpdateCompanyUserQuery", "DeleteCompanyUserQuery" -> queryService.displayComponent(this.query, UpdateCompanyUserController.query);
+            case "InsertDomainQuery", "DeleteDomainQuery" -> queryService.displayComponent(this.query, InsertDeleteController.query);
         }
 
     }
@@ -139,6 +141,54 @@ public class MainController implements Initializable {
         }
     }
 
+    public void onInsertDomainEditor(ActionEvent actionEvent) {
+        setQueryChoice("InsertDomainQuery");
+        queryService = new InsertDeleteService();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/InsertDelete.fxml"));
+        InsertDeleteController controller = new InsertDeleteController();
+        controller.setQueryType("insertDomain");
+        controller.setQueryService(queryService);
+        loader.setController(controller);
+
+        try {
+
+            Parent content = loader.load();
+
+            AnchorPane root = (AnchorPane) content;
+
+            editorPane.getChildren().clear();
+
+            editorPane.getChildren().add(0, content);
+
+        }catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void onDeleteDomainEditor(ActionEvent actionEvent) {
+        setQueryChoice("DeleteDomainQuery");
+        queryService = new InsertDeleteService();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/InsertDelete.fxml"));
+        InsertDeleteController controller = new InsertDeleteController();
+        controller.setQueryType("deleteDomain");
+        controller.setQueryService(queryService);
+        loader.setController(controller);
+
+        try {
+
+            Parent content = loader.load();
+
+            AnchorPane root = (AnchorPane) content;
+
+            editorPane.getChildren().clear();
+
+            editorPane.getChildren().add(0, content);
+
+        }catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public String getQueryChoice() {
         return queryChoice;
     }
@@ -146,4 +196,5 @@ public class MainController implements Initializable {
     public void setQueryChoice(String queryChoice) {
         this.queryChoice = queryChoice;
     }
+
 }
