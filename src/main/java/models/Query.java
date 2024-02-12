@@ -2,20 +2,21 @@ package models;
 
 import java.util.ArrayList;
 
-public class SelectQuery {
+public class Query {
 
     private String Id;
+    private String queryType;
     private StringBuilder select;
     private StringBuilder from;
     private StringBuilder joinListString;
-
+    private StringBuilder update;
     private StringBuilder filter;
     private ArrayList<ArrayList<String>> csvArray;
     private StringBuilder csvArrayString;
     private StringBuilder footer;
     private boolean where;
 
-    public SelectQuery(){
+    public Query(){
         select = new StringBuilder();
         from = new StringBuilder();
         joinListString = new StringBuilder(); // joins
@@ -24,6 +25,7 @@ public class SelectQuery {
         csvArrayString = new StringBuilder();
         footer = new StringBuilder();
         where = false;
+        update = new StringBuilder();
     }
 
     public StringBuilder getSelect() {
@@ -101,9 +103,28 @@ public class SelectQuery {
         Id = id;
     }
 
+    public StringBuilder getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(StringBuilder update) {
+        this.update = update;
+    }
+
+    public String getQueryType() {
+        return queryType;
+    }
+
+    public void setQueryType(String queryType) {
+        this.queryType = queryType;
+    }
+
     public StringBuilder display(){
         StringBuilder sb = new StringBuilder();
         sb.append(getSelect()).append(getFrom());
+        if(!getUpdate().isEmpty()){
+            sb.append(getUpdate());
+        }
         if(!getJoinListString().isEmpty()){
             sb.append(getJoinListString());
         }

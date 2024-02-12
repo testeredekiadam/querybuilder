@@ -15,13 +15,13 @@
     <top>
         <MenuBar>
             <Menu text="File">
-                <MenuItem fx:id="searchQuery" text="Search Query" onAction="#onChooseEditor"/>
-                <MenuItem fx:id="updateCompanyUser" text="Update Company/User" onAction="#onChooseEditor"/>
-                <MenuItem fx:id="deleteCompanyUser" text="Delete Company/User" onAction="#onChooseEditor"/>
-                <MenuItem fx:id="insertDomain" text="Insert Domain" onAction="#onChooseEditor"/>
-                <MenuItem fx:id="deleteDomain" text="Delete Domain" onAction="#onChooseEditor"/>
-                <MenuItem fx:id="updateMailDomains" text="Update Mail Domains" onAction="#onChooseEditor"/>
-                <MenuItem fx:id="importUserFromCSV" text="Import User From CSV" onAction="#onChooseEditor"/>
+                <MenuItem fx:id="searchQuery" text="Search Query" onAction="#onSearchQueryEditor"/>
+                <MenuItem fx:id="updateCompanyUser" text="Update Company/User" onAction="#onUpdateCompanyUserEditor"/>
+                <MenuItem fx:id="deleteCompanyUser" text="Delete Company/User" onAction="#onDeleteCompanyUserEditor"/>
+                <MenuItem fx:id="insertDomain" text="Insert Domain" onAction="#onInsertDomainEditor"/>
+                <MenuItem fx:id="deleteDomain" text="Delete Domain" onAction="#onDeleteDomainEditor"/>
+                <MenuItem fx:id="updateMailDomains" text="Update Mail Domains" onAction="#onUpdateDomainEditor"/>
+                <MenuItem fx:id="importUserFromCSV" text="Import User From CSV" onAction="#onSearchQueryEditor"/>
             </Menu>
         </MenuBar>
 
@@ -30,31 +30,24 @@
     </top>
 
     <center>
-        <VBox spacing="20">
-                <TabPane fx:id="tabPane" minHeight="200">
 
-                    <Tab closable="false" styleClass="transparent-tab">
-                        <graphic>
-                            <Button text="New Tab" onAction="#onAddNewTab" styleClass="borderless-button"/>
-                        </graphic>
-                    </Tab>
+        <AnchorPane>
+            <VBox fx:id="editorPane" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+            <VBox spacing="20" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
 
-                </TabPane>
+                <HBox spacing="20"  style="-fx-padding: 0 0 10 20">
+                    <Button fx:id="displayQueryButton" text="Display Query" onAction="#display"/>
+                </HBox>
 
-            <HBox spacing="20"  style="-fx-padding: 0 0 10 20">
-                <Button fx:id="displayQueryButton" text="Display Query" onAction="#display"/>
+                <TextArea fx:id="query" editable="false"/>
 
-            </HBox>
-
-            <TextArea fx:id="query" editable="false">
-
-            </TextArea>
-
-        </VBox>
+            </VBox>
+        </AnchorPane>
 
     </center>
 
     <bottom>
+
         <Button fx:id="copyButton" text="Copy" onAction="#onCopy" />
 
     </bottom>

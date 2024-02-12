@@ -50,7 +50,7 @@ public class JoinController implements Initializable {
 
         this.join.setPredicateRight(this.joinChoiceBox.getValue());
 
-        EditorController.addJoinList(join);
+        SearchQueryItemController.addJoinList(join);
         this.join.setId(this.joinId);
     }
 
@@ -60,7 +60,7 @@ public class JoinController implements Initializable {
         AnchorPane parentPane = (AnchorPane)parentHBox.getParent();
         FlowPane parentFlow = (FlowPane)parentPane.getParent();
         parentFlow.getChildren().remove(parentPane);
-        EditorController.deleteJoinById(this.join.getId());
+        SearchQueryItemController.deleteJoinById(this.join.getId());
     }
 
 

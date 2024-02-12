@@ -1,20 +1,22 @@
 package service;
 
-import controller.MainController;
+import controller.SearchQueryController;
 import javafx.scene.control.TextArea;
 import models.Join;
-import models.SelectQuery;
+import models.Query;
 
 import java.util.ArrayList;
 
-public class QueryComponents {
+public class SearchQueryServiceImpl implements QueryServiceInterface {
 
-    public static void displayComponent(TextArea query, ArrayList<SelectQuery> queryList){
+
+    @Override
+    public void displayComponent(TextArea query, ArrayList<Query> queryList) {
 
         StringBuilder stringBuilder = new StringBuilder();
         if(query != null){
 
-            for (SelectQuery item : queryList) {
+            for (Query item : queryList) {
                 if(!queryList.get(0).equals(item)){
                     stringBuilder.append("\nUNION\n\n");
                 }
@@ -23,9 +25,16 @@ public class QueryComponents {
             }
             query.setText(stringBuilder.toString());
         }
+
     }
 
-    public static void selectComponent(SelectQuery query, String columns){
+    @Override
+    public void displayComponent(TextArea query, Query query2) {
+
+    }
+
+    @Override
+    public void selectComponent(Query query, String columns) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("SELECT ");
         if(!columns.isEmpty()) {
@@ -35,11 +44,11 @@ public class QueryComponents {
             stringBuilder.append("*");
         }
         stringBuilder.append("\n");
-        MainController.getQueryListElement(Integer.parseInt(query.getId())).setSelect(stringBuilder);
-
+        SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setSelect(stringBuilder);
     }
 
-    public static void fromComponent(SelectQuery query, String table){
+    @Override
+    public void fromComponent(Query query, String table) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("FROM ");
         if(!table.isEmpty()){
@@ -49,23 +58,24 @@ public class QueryComponents {
             stringBuilder.append(" 'enter table name' ");
         }
         stringBuilder.append("\n");
-        MainController.getQueryListElement(Integer.parseInt(query.getId())).setFrom(stringBuilder);
+        SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setFrom(stringBuilder);
     }
 
-    public static void whereComponent(SelectQuery query, String choice, String column, String filter){
+    @Override
+    public void whereComponent(Query query, String choice, String column, String filter) {
         StringBuilder stringBuilder;
         if(column.isEmpty() || filter.isEmpty()){
             stringBuilder = new StringBuilder();
         }
         else{
             stringBuilder = new StringBuilder();
-            if(MainController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
+            if(SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
                 stringBuilder.append(" AND ");
             }
 
-            if(!MainController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
+            if(!SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
                 stringBuilder.append("WHERE ");
-                MainController.getQueryListElement(Integer.parseInt(query.getId())).setWhere(true);
+                SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setWhere(true);
             }
             stringBuilder.append(column);
 
@@ -82,20 +92,22 @@ public class QueryComponents {
             }
             stringBuilder.append(filter).append("\n");
         }
-        MainController.getQueryListElement(Integer.parseInt(query.getId())).setFilter(stringBuilder);
+        SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setFilter(stringBuilder);
     }
 
-    public static void searchInCsv(SelectQuery query, String columnFilter, ArrayList<ArrayList<String>> queryArray){
+    @Override
+    public void searchInCsv(Query query, String columnFilter, ArrayList<ArrayList<String>> queryArray) {
         StringBuilder stringBuilder = new StringBuilder();
         final int[] i = {0};
+        System.out.println(SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).isWhere());
 
-        if(MainController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
+        if(SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
             stringBuilder.append("AND ");
         }
 
-        if(!MainController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
+        if(!SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).isWhere()){
             stringBuilder.append("WHERE ");
-            MainController.getQueryListElement(Integer.parseInt(query.getId())).setWhere(true);
+            SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setWhere(true);
         }
 
         stringBuilder
@@ -115,10 +127,11 @@ public class QueryComponents {
             i[0]++;
         });
 
-        MainController.getQueryListElement(Integer.parseInt(query.getId())).setCsvArrayString(stringBuilder);
+        SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setCsvArrayString(stringBuilder);
     }
 
-    public static void joinComponent(SelectQuery query, ArrayList<Join> joinList){
+    @Override
+    public void joinComponent(Query query, ArrayList<Join> joinList) {
         StringBuilder stringBuilder = new StringBuilder();
         if(!joinList.isEmpty()){
             for(Join item : joinList){
@@ -132,7 +145,17 @@ public class QueryComponents {
             }
         }
 
-        MainController.getQueryListElement(Integer.parseInt(query.getId())).setJoinListString(stringBuilder);
+        SearchQueryController.getQueryListElement(Integer.parseInt(query.getId())).setJoinListString(stringBuilder);
+    }
+
+    @Override
+    public String standardInfoComponents(String type, String s1, String s2) {
+        return null;
+    }
+
+    @Override
+    public void updateComponent(Query query, String column2update, String updated) {
+
     }
 
 
