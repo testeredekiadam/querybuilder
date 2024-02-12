@@ -42,6 +42,7 @@ public class SearchQueryItemController implements Initializable {
     private static int joinId = 0;
 
     QueryServiceInterface queryService = new SearchQueryServiceImpl();
+    Csv csvService;
 
     public int getJoinId() {
         return joinId;
@@ -54,6 +55,9 @@ public class SearchQueryItemController implements Initializable {
         this.query = new Query();
         joinList = new ArrayList<>();
         this.filterChoiceBox.getItems().addAll(this.options);
+
+        csvService = new Csv();
+        csvService.setTask("filter");
 
         this.query.setId(this.tabId);
         this.query.setWhere(false);
@@ -69,7 +73,7 @@ public class SearchQueryItemController implements Initializable {
 
         if(selectedFile != null){
             this.filePath.setText(selectedFile.getAbsolutePath());
-            SearchQueryController.getQueryListElement(Integer.parseInt(this.query.getId())).setCsvArray(Csv.CsvToString(selectedFile.getAbsolutePath()));
+            SearchQueryController.getQueryListElement(Integer.parseInt(this.query.getId())).setCsvArray(csvService.CsvToString(selectedFile.getAbsolutePath()));
         }
     }
 

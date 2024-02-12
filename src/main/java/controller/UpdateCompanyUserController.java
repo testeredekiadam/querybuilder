@@ -21,6 +21,7 @@ public class UpdateCompanyUserController implements Initializable {
     public Button openFileButton, updateButton;
     public TextField filePath, table, modifiedBy, comment4admin, updateItem, updatePredicate, attribute, filter, csvFilterAttribute;
     QueryServiceInterface updateQueryService;
+    Csv csvService;
     FileChooser fileChooser;
     public static Query query;
     private final String[] options = {"In", "Equal", "Greater than", "Less than", "Greater than or equal", "Less than or equal", "Not equal", "Between", "Like"};
@@ -44,6 +45,8 @@ public class UpdateCompanyUserController implements Initializable {
         query.setWhere(false);
         filterChoiceBox.getItems().addAll(this.options);
 
+        csvService = new Csv();
+        csvService.setTask("filter");
 
         if(!this.queryType.equals("update")) {
             this.toggleUserCompany.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
@@ -70,7 +73,7 @@ public class UpdateCompanyUserController implements Initializable {
 
         if(selectedFile != null){
             this.filePath.setText(selectedFile.getAbsolutePath());
-            query.setCsvArray(Csv.CsvToString((selectedFile.getAbsolutePath())));
+            query.setCsvArray(csvService.CsvToString((selectedFile.getAbsolutePath())));
         }
     }
 

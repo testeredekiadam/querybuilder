@@ -43,6 +43,7 @@ public class MainController implements Initializable {
             case "UpdateCompanyUserQuery", "DeleteCompanyUserQuery" -> queryService.displayComponent(this.query, UpdateCompanyUserController.query);
             case "InsertDomainQuery", "DeleteDomainQuery" -> queryService.displayComponent(this.query, InsertDeleteController.query);
             case "UpdateDomainQuery" -> queryService.displayComponent(this.query, UpdateDomainController.query);
+            case "ImportUserCsv" -> queryService.displayComponent(this.query, UserImportCsvController.query);
         }
 
     }
@@ -193,6 +194,29 @@ public class MainController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/UpdateDomain.fxml"));
         UpdateDomainController controller = new UpdateDomainController();
         controller.setQueryType("deleteDomain");
+        controller.setQueryService(queryService);
+        loader.setController(controller);
+
+        try {
+
+            Parent content = loader.load();
+
+            AnchorPane root = (AnchorPane) content;
+
+            editorPane.getChildren().clear();
+
+            editorPane.getChildren().add(0, content);
+
+        }catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void onImportUserFromCsvEditor(ActionEvent actionEvent) {
+        setQueryChoice("ImportUserCsv");
+        queryService = new UserImportCsvServiceImpl();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/UserImportCsv.fxml"));
+        UserImportCsvController controller = new UserImportCsvController();
         controller.setQueryService(queryService);
         loader.setController(controller);
 

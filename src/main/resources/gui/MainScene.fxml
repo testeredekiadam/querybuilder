@@ -21,7 +21,7 @@
                 <MenuItem fx:id="insertDomain" text="Insert Domain" onAction="#onInsertDomainEditor"/>
                 <MenuItem fx:id="deleteDomain" text="Delete Domain" onAction="#onDeleteDomainEditor"/>
                 <MenuItem fx:id="updateMailDomains" text="Update Mail Domains" onAction="#onUpdateDomainEditor"/>
-                <MenuItem fx:id="importUserFromCSV" text="Import User From CSV" onAction="#onSearchQueryEditor"/>
+                <MenuItem fx:id="importUserFromCSV" text="Import User From CSV" onAction="#onImportUserFromCsvEditor"/>
             </Menu>
         </MenuBar>
 

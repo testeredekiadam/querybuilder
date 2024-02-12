@@ -11,6 +11,7 @@ public class Query {
     private StringBuilder joinListString;
     private StringBuilder update;
     private StringBuilder filter;
+    private StringBuilder insertInto;
     private ArrayList<ArrayList<String>> csvArray;
     private StringBuilder csvArrayString;
     private StringBuilder footer;
@@ -115,13 +116,26 @@ public class Query {
         return queryType;
     }
 
+    public StringBuilder getInsertInto() {
+        return insertInto;
+    }
+
+    public void setInsertInto(StringBuilder insertInto) {
+        this.insertInto = insertInto;
+    }
+
     public void setQueryType(String queryType) {
         this.queryType = queryType;
     }
 
     public StringBuilder display(){
         StringBuilder sb = new StringBuilder();
-        sb.append(getSelect()).append(getFrom());
+        if(!getSelect().isEmpty()){
+            sb.append(getSelect());
+        }
+        if(!getFrom().isEmpty()){
+            sb.append(getFrom());
+        }
         if(!getUpdate().isEmpty()){
             sb.append(getUpdate());
         }
