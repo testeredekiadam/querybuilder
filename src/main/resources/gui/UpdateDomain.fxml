@@ -8,8 +8,8 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml">
-    <GridPane>
-        <VBox>
+    <GridPane style="-fx-padding: 10 0 10 20">
+        <VBox spacing="20">
             <TextField fx:id="replace" promptText="Replace text"/>
             <TextField fx:id="replaceFilter" promptText="Replace filter"/>
         </VBox>
