@@ -65,10 +65,11 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        onSearchQueryEditor();
 
     }
 
-    public void onSearchQueryEditor(ActionEvent actionEvent) throws NullPointerException{
+    public void onSearchQueryEditor() throws NullPointerException{
         setQueryChoice("SearchQuery");
         queryService = new SearchQueryServiceImpl();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/SearchQuery.fxml"));
@@ -92,7 +93,7 @@ public class MainController implements Initializable {
 
     }
 
-    public void onUpdateCompanyUserEditor(ActionEvent actionEvent) {
+    public void onUpdateCompanyUserEditor() {
         setQueryChoice("UpdateCompanyUserQuery");
         queryService = new UpdateCompanyUserQueryServiceImpl();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/UpdateCompanyUser.fxml"));
@@ -116,7 +117,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onDeleteCompanyUserEditor(ActionEvent actionEvent) {
+    public void onDeleteCompanyUserEditor() {
         setQueryChoice("DeleteCompanyUserQuery");
         queryService = new UpdateCompanyUserQueryServiceImpl();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/DeleteCompanyUser.fxml"));
@@ -140,7 +141,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onInsertDomainEditor(ActionEvent actionEvent) {
+    public void onInsertDomainEditor() {
         setQueryChoice("InsertDomainQuery");
         queryService = new InsertDeleteService();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/InsertDelete.fxml"));
@@ -164,7 +165,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onDeleteDomainEditor(ActionEvent actionEvent) {
+    public void onDeleteDomainEditor() {
         setQueryChoice("DeleteDomainQuery");
         queryService = new InsertDeleteService();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/InsertDelete.fxml"));
@@ -188,7 +189,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onUpdateDomainEditor(ActionEvent actionEvent) {
+    public void onUpdateDomainEditor() {
         setQueryChoice("UpdateDomainQuery");
         queryService = new UpdateDomainServiceImpl();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/UpdateDomain.fxml"));
@@ -212,7 +213,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onImportUserFromCsvEditor(ActionEvent actionEvent) {
+    public void onImportUserFromCsvEditor() {
         setQueryChoice("ImportUserCsv");
         queryService = new UserImportCsvServiceImpl();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/UserImportCsv.fxml"));

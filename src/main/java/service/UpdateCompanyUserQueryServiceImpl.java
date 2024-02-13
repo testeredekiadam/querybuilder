@@ -15,7 +15,6 @@ public class UpdateCompanyUserQueryServiceImpl implements QueryServiceInterface{
     public void displayComponent(TextArea queryArea, Query query) {
         query.setWhere(false);
         queryArea.setText(String.valueOf(query.display()));
-
     }
 
     @Override

@@ -25,7 +25,7 @@ public class SearchQueryItemController implements Initializable {
     @FXML
     private Button openFileButton, updateButton, joinButton;
     @FXML
-    private TextField filePath, table, attribute, selectedColumns, filter;
+    private TextField filePath, table, attribute, selectedColumns, filter, csvFilterAttribute;
     @FXML
     private ChoiceBox<String> filterChoiceBox;
     @FXML
@@ -82,7 +82,7 @@ public class SearchQueryItemController implements Initializable {
         queryService.selectComponent(this.query, selectedColumns.getText());
         queryService.fromComponent(this.query, table.getText());
         queryService.whereComponent(this.query, this.choice, attribute.getText(), filter.getText());
-        queryService.searchInCsv(this.query, attribute.getText(), SearchQueryController.getQueryListElement(Integer.parseInt(this.query.getId())).getCsvArray());
+        queryService.searchInCsv(this.query, csvFilterAttribute.getText(), SearchQueryController.getQueryListElement(Integer.parseInt(this.query.getId())).getCsvArray());
         queryService.joinComponent(this.query, joinList);
 
     }
