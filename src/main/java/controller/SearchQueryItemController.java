@@ -37,7 +37,7 @@ public class SearchQueryItemController implements Initializable {
     private String tabId;
     FileChooser fileChooser;
 
-    private static ArrayList<Join> joinList;
+    private ArrayList<Join> joinList;
 
     private static int joinId = 0;
 
@@ -53,7 +53,7 @@ public class SearchQueryItemController implements Initializable {
         queryService = new SearchQueryServiceImpl();
         this.openFileButton.requestFocus();
         this.query = new Query();
-        joinList = new ArrayList<>();
+        this.joinList = new ArrayList<>();
         this.filterChoiceBox.getItems().addAll(this.options);
 
         csvService = new Csv();
@@ -101,6 +101,7 @@ public class SearchQueryItemController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/Join.fxml"));
         JoinController joinController = new JoinController();
         joinController.setJoinId(String.valueOf(joinId));
+        joinController.setController(this);
         loader.setController(joinController);
         try {
             Parent content = loader.load();
@@ -112,13 +113,21 @@ public class SearchQueryItemController implements Initializable {
         joinId++;
     }
 
-    public static void deleteJoinById(String id){
-        joinList.removeIf(join -> join.getId().equals(id));
+    public void deleteJoinById(String id){
+        this.joinList.removeIf(join -> join.getId().equals(id));
         joinId--;
     }
 
-    public static void addJoinList(Join join){
-        joinList.add(join);
+    public void addJoinList(Join join){
+        this.joinList.add(join);
+    }
+
+    public ArrayList<Join> getJoinList() {
+        return joinList;
+    }
+
+    public void setJoinList(ArrayList<Join> joinList) {
+        this.joinList = joinList;
     }
 
     public void setQueryService(QueryServiceInterface queryService) {
