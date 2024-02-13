@@ -3,51 +3,46 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.shape.Box?>
-<BorderPane xmlns="http://javafx.com/javafx"
+
+<ScrollPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controller.MainController"
-            stylesheets="@../styles/styles.css">
+            stylesheets="@../styles/styles.css"
+            fitToHeight="true" fitToWidth="true">
+    <BorderPane >
+        <top>
+            <MenuBar>
+                <Menu text="File">
+                    <MenuItem fx:id="searchQuery" text="Search Query" onAction="#onSearchQueryEditor"/>
+                    <MenuItem fx:id="updateCompanyUser" text="Update Company/User" onAction="#onUpdateCompanyUserEditor"/>
+                    <MenuItem fx:id="deleteCompanyUser" text="Delete Company/User" onAction="#onDeleteCompanyUserEditor"/>
+                    <MenuItem fx:id="insertDomain" text="Insert Domain" onAction="#onInsertDomainEditor"/>
+                    <MenuItem fx:id="deleteDomain" text="Delete Domain" onAction="#onDeleteDomainEditor"/>
+                    <MenuItem fx:id="updateMailDomains" text="Update Mail Domains" onAction="#onUpdateDomainEditor"/>
+                    <MenuItem fx:id="importUserFromCSV" text="Import User From CSV" onAction="#onImportUserFromCsvEditor"/>
+                </Menu>
+            </MenuBar>
 
+        </top>
 
+        <center>
+            <VBox fx:id="editorPane"/>
+        </center>
 
-
-    <top>
-        <MenuBar>
-            <Menu text="File">
-                <MenuItem fx:id="searchQuery" text="Search Query" onAction="#onSearchQueryEditor"/>
-                <MenuItem fx:id="updateCompanyUser" text="Update Company/User" onAction="#onUpdateCompanyUserEditor"/>
-                <MenuItem fx:id="deleteCompanyUser" text="Delete Company/User" onAction="#onDeleteCompanyUserEditor"/>
-                <MenuItem fx:id="insertDomain" text="Insert Domain" onAction="#onInsertDomainEditor"/>
-                <MenuItem fx:id="deleteDomain" text="Delete Domain" onAction="#onDeleteDomainEditor"/>
-                <MenuItem fx:id="updateMailDomains" text="Update Mail Domains" onAction="#onUpdateDomainEditor"/>
-                <MenuItem fx:id="importUserFromCSV" text="Import User From CSV" onAction="#onImportUserFromCsvEditor"/>
-            </Menu>
-        </MenuBar>
-
-
-
-    </top>
-
-    <center>
-        <AnchorPane>
-            <VBox fx:id="editorPane" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-            <VBox spacing="20" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+        <bottom>
+            <VBox spacing="20">
 
                 <HBox spacing="20"  style="-fx-padding: 0 0 10 20">
-                    <Button fx:id="displayQueryButton" text="Display Query" onAction="#display" />
+                    <Button text="Display Query" onAction="#display" />
                 </HBox>
 
                 <TextArea fx:id="query" editable="false"/>
 
+                <Button text="Copy" onAction="#onCopy" />
+
             </VBox>
 
-        </AnchorPane>
-    </center>
+        </bottom>
 
-    <bottom>
-
-        <Button fx:id="copyButton" text="Copy" onAction="#onCopy" />
-
-    </bottom>
-</BorderPane>
+    </BorderPane>
+</ScrollPane>
