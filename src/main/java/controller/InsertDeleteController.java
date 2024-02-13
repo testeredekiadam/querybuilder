@@ -11,7 +11,7 @@ import service.QueryServiceInterface;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class InsertDeleteController implements Initializable {
+public class InsertDeleteController implements ControllerInterface {
 
     QueryServiceInterface queryService;
     public static Query query;
@@ -45,6 +45,7 @@ public class InsertDeleteController implements Initializable {
         }
     }
 
+    @Override
     public void update() {
 
         setChoice();
@@ -59,8 +60,14 @@ public class InsertDeleteController implements Initializable {
         return queryService;
     }
 
+    @Override
     public void setQueryService(QueryServiceInterface queryService) {
         this.queryService = queryService;
+    }
+
+    @Override
+    public void setTabId(String tabId) {
+
     }
 
     public void setChoice() {
@@ -71,6 +78,7 @@ public class InsertDeleteController implements Initializable {
         return queryType;
     }
 
+    @Override
     public void setQueryType(String queryType) {
         this.queryType = queryType;
     }

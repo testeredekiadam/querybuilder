@@ -17,7 +17,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class UpdateCompanyUserController implements Initializable {
+public class UpdateCompanyUserController implements ControllerInterface {
     public Button openFileButton, updateButton;
     public TextField filePath, table, modifiedBy, comment4admin, updateItem, updatePredicate, attribute, filter, csvFilterAttribute;
     QueryServiceInterface updateQueryService;
@@ -100,6 +100,11 @@ public class UpdateCompanyUserController implements Initializable {
 
     public void setQueryService(QueryServiceInterface updateQueryService){
         this.updateQueryService = updateQueryService;
+    }
+
+    @Override
+    public void setTabId(String tabId) {
+
     }
 
     public Query getQuery() {

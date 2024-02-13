@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class UserImportCsvController implements Initializable {
+public class UserImportCsvController implements ControllerInterface {
 
     @FXML
     public TextField filePath, columns, table;
@@ -55,11 +55,21 @@ public class UserImportCsvController implements Initializable {
         queryService.searchInCsv(query, columns.getText(), query.getCsvArray());
     }
 
+    @Override
+    public void setQueryType(String queryType) {
+
+    }
+
     public QueryServiceInterface getQueryService() {
         return queryService;
     }
 
     public void setQueryService(QueryServiceInterface queryService) {
         this.queryService = queryService;
+    }
+
+    @Override
+    public void setTabId(String tabId) {
+
     }
 }

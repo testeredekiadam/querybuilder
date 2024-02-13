@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class SearchQueryController implements Initializable {
+public class SearchQueryController implements ControllerInterface {
 
     @FXML
     private TabPane tabPane;
@@ -48,7 +48,7 @@ public class SearchQueryController implements Initializable {
         );
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/SearchQueryItem.fxml"));
-        SearchQueryItemController editorController = new SearchQueryItemController();
+        ControllerInterface editorController = new SearchQueryItemController();
         editorController.setQueryService(this.queryService);
         editorController.setTabId(String.valueOf(tabId));
         loader.setController(editorController);
@@ -91,7 +91,18 @@ public class SearchQueryController implements Initializable {
         return queryService;
     }
 
+    @Override
+    public void update() {}
+
+    @Override
+    public void setQueryType(String queryType) {}
+
     public void setQueryService(QueryServiceInterface queryService) {
         this.queryService = queryService;
+    }
+
+    @Override
+    public void setTabId(String tabId) {
+
     }
 }
