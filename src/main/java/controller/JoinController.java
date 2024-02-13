@@ -21,6 +21,7 @@ public class JoinController implements Initializable {
     private Button discardButton;
     @FXML
     private ChoiceBox<String> joinChoiceBox;
+    private SearchQueryItemController controller;
 
     private final String[] options = {"INNER JOIN", "FULL JOIN", "LEFT JOIN", "RIGHT JOIN", "OUTER JOIN"};
 
@@ -50,7 +51,7 @@ public class JoinController implements Initializable {
 
         this.join.setPredicateRight(this.joinChoiceBox.getValue());
 
-        SearchQueryItemController.addJoinList(join);
+        controller.addJoinList(join);
         this.join.setId(this.joinId);
     }
 
@@ -60,9 +61,14 @@ public class JoinController implements Initializable {
         AnchorPane parentPane = (AnchorPane)parentHBox.getParent();
         FlowPane parentFlow = (FlowPane)parentPane.getParent();
         parentFlow.getChildren().remove(parentPane);
-        SearchQueryItemController.deleteJoinById(this.join.getId());
+        controller.deleteJoinById(this.join.getId());
     }
 
+    public SearchQueryItemController getController() {
+        return controller;
+    }
 
-
+    public void setController(SearchQueryItemController controller) {
+        this.controller = controller;
+    }
 }
