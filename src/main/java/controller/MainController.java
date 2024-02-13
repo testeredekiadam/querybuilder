@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,7 +9,6 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 
 
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import service.*;
 
@@ -23,15 +21,16 @@ public class MainController implements Initializable {
 
     @FXML
     public MenuItem searchQuery, updateCompanyUser, deleteCompanyUser, insertDomain, deleteDomain, updateMailDomains, importUserFromCSV;
-    @FXML
-    public Label chooseLabel;
+
     public VBox editorPane;
-    @FXML
-    private Button copyButton, displayQueryButton;
+
     @FXML
     private TextArea query;
 
     QueryServiceInterface queryService;
+    ControllerInterface controller;
+    ControllerAbstractFactory controllerAbstractFactory = new ControllerConcreteFactory();
+    QueryServiceAbstractFactory queryServiceAbstractFactory = new QueryServiceConcreteFactory();
 
     private String queryChoice;
 
@@ -65,167 +64,81 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        onSearchQueryEditor();
-
-    }
-
-    public void onSearchQueryEditor() throws NullPointerException{
-        setQueryChoice("SearchQuery");
-        queryService = new SearchQueryServiceImpl();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/SearchQuery.fxml"));
-        SearchQueryController controller = new SearchQueryController();
-        controller.setQueryService(queryService);
-        loader.setController(controller);
-
         try {
-
-            Parent content = loader.load();
-
-            AnchorPane root = (AnchorPane) content;
-
-            editorPane.getChildren().clear();
-
-            editorPane.getChildren().add(0, content);
-
-        }catch (IOException e) {
+            onSearchQueryEditor();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
     }
 
-    public void onUpdateCompanyUserEditor() {
-        setQueryChoice("UpdateCompanyUserQuery");
-        queryService = new UpdateCompanyUserQueryServiceImpl();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/UpdateCompanyUser.fxml"));
-        UpdateCompanyUserController controller = new UpdateCompanyUserController();
-        controller.setQueryType("update");
-        controller.setQueryService(queryService);
-        loader.setController(controller);
-
-        try {
-
-            Parent content = loader.load();
-
-            AnchorPane root = (AnchorPane) content;
-
-            editorPane.getChildren().clear();
-
-            editorPane.getChildren().add(0, content);
-
-        }catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public void onSearchQueryEditor() throws Exception {
+        onOpenEditor("SearchQuery",
+                "SearchQueryService",
+                "/gui/SearchQuery.fxml",
+                "SearchQueryController",
+                "search");
     }
 
-    public void onDeleteCompanyUserEditor() {
-        setQueryChoice("DeleteCompanyUserQuery");
-        queryService = new UpdateCompanyUserQueryServiceImpl();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/DeleteCompanyUser.fxml"));
-        UpdateCompanyUserController controller = new UpdateCompanyUserController();
-        controller.setQueryType("deleteCompany");
-        controller.setQueryService(queryService);
-        loader.setController(controller);
-
-        try {
-
-            Parent content = loader.load();
-
-            AnchorPane root = (AnchorPane) content;
-
-            editorPane.getChildren().clear();
-
-            editorPane.getChildren().add(0, content);
-
-        }catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public void onUpdateCompanyUserEditor() throws Exception {
+        onOpenEditor("UpdateCompanyUserQuery",
+                "UpdateCompanyUserQueryService",
+                "/gui/UpdateCompanyUser.fxml",
+                "UpdateCompanyUserController",
+                "update");
     }
 
-    public void onInsertDomainEditor() {
-        setQueryChoice("InsertDomainQuery");
-        queryService = new InsertDeleteService();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/InsertDelete.fxml"));
-        InsertDeleteController controller = new InsertDeleteController();
-        controller.setQueryType("insertDomain");
-        controller.setQueryService(queryService);
-        loader.setController(controller);
-
-        try {
-
-            Parent content = loader.load();
-
-            AnchorPane root = (AnchorPane) content;
-
-            editorPane.getChildren().clear();
-
-            editorPane.getChildren().add(0, content);
-
-        }catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public void onDeleteCompanyUserEditor() throws Exception {
+        onOpenEditor("DeleteCompanyUserQuery",
+                "UpdateCompanyUserQueryService",
+                "/gui/DeleteCompanyUser.fxml",
+                "UpdateCompanyUserController",
+                "deleteCompany");
+    }
+    public void onInsertDomainEditor() throws Exception {
+        onOpenEditor("InsertDomainQuery",
+                "InsertDeleteService",
+                "/gui/InsertDelete.fxml",
+                "InsertDeleteController",
+                "insertDomain");
     }
 
-    public void onDeleteDomainEditor() {
-        setQueryChoice("DeleteDomainQuery");
-        queryService = new InsertDeleteService();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/InsertDelete.fxml"));
-        InsertDeleteController controller = new InsertDeleteController();
-        controller.setQueryType("deleteDomain");
-        controller.setQueryService(queryService);
-        loader.setController(controller);
-
-        try {
-
-            Parent content = loader.load();
-
-            AnchorPane root = (AnchorPane) content;
-
-            editorPane.getChildren().clear();
-
-            editorPane.getChildren().add(0, content);
-
-        }catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public void onDeleteDomainEditor() throws Exception {
+        onOpenEditor("DeleteDomainQuery",
+                "InsertDeleteService",
+                "/gui/InsertDelete.fxml",
+                "InsertDeleteController",
+                "deleteDomain");
     }
 
-    public void onUpdateDomainEditor() {
-        setQueryChoice("UpdateDomainQuery");
-        queryService = new UpdateDomainServiceImpl();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/UpdateDomain.fxml"));
-        UpdateDomainController controller = new UpdateDomainController();
-        controller.setQueryType("deleteDomain");
-        controller.setQueryService(queryService);
-        loader.setController(controller);
-
-        try {
-
-            Parent content = loader.load();
-
-            AnchorPane root = (AnchorPane) content;
-
-            editorPane.getChildren().clear();
-
-            editorPane.getChildren().add(0, content);
-
-        }catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public void onUpdateDomainEditor() throws Exception {
+        onOpenEditor("UpdateDomainQuery",
+                "UpdateDomainService",
+                "/gui/UpdateDomain.fxml",
+                "UpdateDomainController",
+                "deleteDomain");
     }
 
-    public void onImportUserFromCsvEditor() {
-        setQueryChoice("ImportUserCsv");
-        queryService = new UserImportCsvServiceImpl();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/UserImportCsv.fxml"));
-        UserImportCsvController controller = new UserImportCsvController();
+    public void onImportUserFromCsvEditor() throws Exception {
+        onOpenEditor("ImportUserCsv",
+                "UserImportCsvService",
+                "/gui/UserImportCsv.fxml",
+                "UserImportCsvController",
+                "importUser");
+    }
+
+    public void onOpenEditor(String queryChoice, String serviceName, String fxmlLoader, String controllerName, String queryType) throws Exception {
+        setQueryChoice(queryChoice);
+        queryService = queryServiceAbstractFactory.GetQueryService(serviceName);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlLoader));
+        controller = controllerAbstractFactory.GetController(controllerName);
+        controller.setQueryType(queryType);
         controller.setQueryService(queryService);
         loader.setController(controller);
 
         try {
 
             Parent content = loader.load();
-
-            AnchorPane root = (AnchorPane) content;
 
             editorPane.getChildren().clear();
 

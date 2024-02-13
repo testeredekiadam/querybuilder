@@ -12,7 +12,7 @@ import service.QueryServiceInterface;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class UpdateDomainController implements Initializable {
+public class UpdateDomainController implements ControllerInterface {
     @FXML
     public Button updateButton;
     FileChooser fileChooser;
@@ -43,6 +43,11 @@ public class UpdateDomainController implements Initializable {
         return queryType;
     }
 
+    @Override
+    public void update() {
+
+    }
+
     public void setQueryType(String queryType) {
         this.queryType = queryType;
     }
@@ -53,5 +58,10 @@ public class UpdateDomainController implements Initializable {
 
     public void setQueryService(QueryServiceInterface queryService) {
         this.queryService = queryService;
+    }
+
+    @Override
+    public void setTabId(String tabId) {
+
     }
 }

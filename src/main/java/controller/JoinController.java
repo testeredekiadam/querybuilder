@@ -9,11 +9,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import models.Join;
+import service.QueryServiceInterface;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class JoinController implements Initializable {
+public class JoinController implements ControllerInterface {
     private String joinId;
     @FXML
     private TextField joinTable, joinPredicateLeft, joinPredicateRight;
@@ -26,10 +27,6 @@ public class JoinController implements Initializable {
     private final String[] options = {"INNER JOIN", "FULL JOIN", "LEFT JOIN", "RIGHT JOIN", "OUTER JOIN"};
 
     Join join;
-
-    public void setJoinId(String id){
-        this.joinId = id;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -55,6 +52,10 @@ public class JoinController implements Initializable {
         this.join.setId(this.joinId);
     }
 
+    public void setJoinId(String id){
+        this.joinId = id;
+    }
+
     @FXML
     public void discardJoin(){
         HBox parentHBox = (HBox)this.discardButton.getParent();
@@ -70,5 +71,25 @@ public class JoinController implements Initializable {
 
     public void setController(SearchQueryItemController controller) {
         this.controller = controller;
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void setQueryType(String queryType) {
+
+    }
+
+    @Override
+    public void setQueryService(QueryServiceInterface queryService) {
+
+    }
+
+    @Override
+    public void setTabId(String tabId) {
+
     }
 }

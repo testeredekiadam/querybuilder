@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class SearchQueryItemController implements Initializable {
+public class SearchQueryItemController implements ControllerInterface{
     @FXML
     private Button openFileButton, updateButton, joinButton;
     @FXML
@@ -86,6 +86,9 @@ public class SearchQueryItemController implements Initializable {
         queryService.joinComponent(this.query, joinList);
 
     }
+
+    @Override
+    public void setQueryType(String queryType) {}
 
 
     public void setTabId(String tabId) {
