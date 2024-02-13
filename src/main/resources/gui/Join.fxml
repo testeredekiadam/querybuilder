@@ -10,7 +10,7 @@
             xmlns:fx="http://javafx.com/fxml"
             prefHeight="20">
 
-    <HBox spacing="20">
+    <HBox spacing="20" style="-fx-padding: 0 0 10 0">
         <ChoiceBox fx:id="joinChoiceBox" value="INNER" prefWidth="100"/>
         <TextField fx:id="joinTable" promptText="Enter table to join"/>
         <TextField fx:id="joinPredicateLeft" promptText="Enter left predicate"/>

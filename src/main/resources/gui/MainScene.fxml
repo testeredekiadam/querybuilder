@@ -21,7 +21,7 @@
                 <MenuItem fx:id="insertDomain" text="Insert Domain" onAction="#onInsertDomainEditor"/>
                 <MenuItem fx:id="deleteDomain" text="Delete Domain" onAction="#onDeleteDomainEditor"/>
                 <MenuItem fx:id="updateMailDomains" text="Update Mail Domains" onAction="#onUpdateDomainEditor"/>
-                <MenuItem fx:id="importUserFromCSV" text="Import User From CSV" onAction="#onSearchQueryEditor"/>
+                <MenuItem fx:id="importUserFromCSV" text="Import User From CSV" onAction="#onImportUserFromCsvEditor"/>
             </Menu>
         </MenuBar>
 
@@ -30,20 +30,19 @@
     </top>
 
     <center>
-
         <AnchorPane>
             <VBox fx:id="editorPane" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
             <VBox spacing="20" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
 
                 <HBox spacing="20"  style="-fx-padding: 0 0 10 20">
-                    <Button fx:id="displayQueryButton" text="Display Query" onAction="#display"/>
+                    <Button fx:id="displayQueryButton" text="Display Query" onAction="#display" />
                 </HBox>
 
                 <TextArea fx:id="query" editable="false"/>
 
             </VBox>
-        </AnchorPane>
 
+        </AnchorPane>
     </center>
 
     <bottom>

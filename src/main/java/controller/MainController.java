@@ -43,6 +43,7 @@ public class MainController implements Initializable {
             case "UpdateCompanyUserQuery", "DeleteCompanyUserQuery" -> queryService.displayComponent(this.query, UpdateCompanyUserController.query);
             case "InsertDomainQuery", "DeleteDomainQuery" -> queryService.displayComponent(this.query, InsertDeleteController.query);
             case "UpdateDomainQuery" -> queryService.displayComponent(this.query, UpdateDomainController.query);
+            case "ImportUserCsv" -> queryService.displayComponent(this.query, UserImportCsvController.query);
         }
 
     }
@@ -64,10 +65,11 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        onSearchQueryEditor();
 
     }
 
-    public void onSearchQueryEditor(ActionEvent actionEvent) throws NullPointerException{
+    public void onSearchQueryEditor() throws NullPointerException{
         setQueryChoice("SearchQuery");
         queryService = new SearchQueryServiceImpl();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/SearchQuery.fxml"));
@@ -91,7 +93,7 @@ public class MainController implements Initializable {
 
     }
 
-    public void onUpdateCompanyUserEditor(ActionEvent actionEvent) {
+    public void onUpdateCompanyUserEditor() {
         setQueryChoice("UpdateCompanyUserQuery");
         queryService = new UpdateCompanyUserQueryServiceImpl();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/UpdateCompanyUser.fxml"));
@@ -115,7 +117,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onDeleteCompanyUserEditor(ActionEvent actionEvent) {
+    public void onDeleteCompanyUserEditor() {
         setQueryChoice("DeleteCompanyUserQuery");
         queryService = new UpdateCompanyUserQueryServiceImpl();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/DeleteCompanyUser.fxml"));
@@ -139,7 +141,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onInsertDomainEditor(ActionEvent actionEvent) {
+    public void onInsertDomainEditor() {
         setQueryChoice("InsertDomainQuery");
         queryService = new InsertDeleteService();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/InsertDelete.fxml"));
@@ -163,7 +165,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onDeleteDomainEditor(ActionEvent actionEvent) {
+    public void onDeleteDomainEditor() {
         setQueryChoice("DeleteDomainQuery");
         queryService = new InsertDeleteService();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/InsertDelete.fxml"));
@@ -187,12 +189,35 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onUpdateDomainEditor(ActionEvent actionEvent) {
+    public void onUpdateDomainEditor() {
         setQueryChoice("UpdateDomainQuery");
         queryService = new UpdateDomainServiceImpl();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/UpdateDomain.fxml"));
         UpdateDomainController controller = new UpdateDomainController();
         controller.setQueryType("deleteDomain");
+        controller.setQueryService(queryService);
+        loader.setController(controller);
+
+        try {
+
+            Parent content = loader.load();
+
+            AnchorPane root = (AnchorPane) content;
+
+            editorPane.getChildren().clear();
+
+            editorPane.getChildren().add(0, content);
+
+        }catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void onImportUserFromCsvEditor() {
+        setQueryChoice("ImportUserCsv");
+        queryService = new UserImportCsvServiceImpl();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/UserImportCsv.fxml"));
+        UserImportCsvController controller = new UserImportCsvController();
         controller.setQueryService(queryService);
         loader.setController(controller);
 
