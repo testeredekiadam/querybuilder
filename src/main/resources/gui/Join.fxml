@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -14,7 +11,7 @@
             <TextField fx:id="joinTable" promptText="Enter table to join"/>
             <TextField fx:id="joinPredicateLeft" promptText="Enter left predicate"/>
             <TextField fx:id="joinPredicateRight" promptText="Enter right predicate"/>
-            <Button fx:id="discardButton" text="Discard" onAction="#discardJoin"/>
+            <Button fx:id="discardButton" text="X" onAction="#discardJoin"/>
         </HBox>
 
 </AnchorPane>

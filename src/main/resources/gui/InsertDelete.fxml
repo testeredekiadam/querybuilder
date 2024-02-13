@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -15,9 +12,9 @@
             <TextField fx:id="domain"/>
             <TextField fx:id="values" promptText="Values"/>
             <HBox fx:id="choiceBox">
-                <TextField fx:id="attribute" promptText="Enter attribute" prefWidth="300" maxWidth="300"/>
+                <TextField fx:id="attribute" promptText="Enter attribute" prefWidth="150" maxWidth="150"/>
                 <ChoiceBox fx:id="filterChoiceBox" value="In" prefWidth="150"/>
-                <TextField fx:id="filter" promptText="Enter filter" prefWidth="300" maxWidth="300"/>
+                <TextField fx:id="filter" promptText="Enter filter" prefWidth="150" maxWidth="150"/>
             </HBox>
         </VBox>
         <HBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-padding: 0 0 10 20">
